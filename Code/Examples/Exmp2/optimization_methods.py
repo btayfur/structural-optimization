@@ -258,12 +258,12 @@ def visualize_results(results):
     
     for (name, result), color in zip(results.items(), colors):
         f_history = result['f_history']
-        plt.semilogy(np.arange(len(f_history)), np.array(f_history) - 1.0, '-', color=color, 
+        plt.semilogy(np.arange(len(f_history)), np.array(f_history), '-', color=color, 
                     label=name)
     
     plt.xlabel('İterasyon')
-    plt.ylabel('f(x) - f* (log ölçeği)')
-    plt.title('Optimizasyon Metodlarının Yakınsama Hızları')
+    plt.ylabel('f(x) (log ölçeği)')
+    plt.title('Fonksiyon Değerlerinin İterasyonlara Göre Değişimi')
     plt.legend()
     plt.grid(True)
     
@@ -276,12 +276,12 @@ def visualize_results(results):
     
     for (name, result), color in zip(results.items(), colors):
         x_history = result['x_history']
-        plt.semilogy(np.arange(len(x_history)), np.abs(np.array(x_history) - 2.0), '-', color=color, 
-                    label=name)
+        plt.plot(np.arange(len(x_history)), np.array(x_history), '-', color=color, 
+                label=name)
     
     plt.xlabel('İterasyon')
-    plt.ylabel('|x - x*| (log ölçeği)')
-    plt.title('Optimizasyon Metodlarının x Değeri Yakınsama Hızları')
+    plt.ylabel('x değeri')
+    plt.title('x Değerlerinin İterasyonlara Göre Değişimi')
     plt.legend()
     plt.grid(True)
     

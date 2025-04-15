@@ -1,0 +1,49 @@
+%==============STYLE BEGINS==============%
+\usepackage[marginparwidth=6cm, marginparsep=0.7cm]{geometry}
+%Mathematics Package
+\usepackage{amsmath}
+%Image Style
+\usepackage{graphicx}
+\usepackage{floatrow}
+\floatsetup[widefigure]{margins=hangright,capposition=beside,
+capbesideposition={bottom, right},floatwidth=\textwidth}
+%Margin Notes Package
+\usepackage{sidenotes}
+%Style \maketitle
+\usepackage{titlesec}
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+  {\Huge\sffamily\bfseries\@title}
+  \vskip 1.5em
+  {\sffamily\@author}
+\end{flushleft}\egroup
+}
+\makeatother
+%Header and Footer Package
+\usepackage{fancyhdr}
+%Style Abstract
+\renewenvironment{abstract}
+	{\par{\bfseries \noindent \sffamily \abstractname.}}
+	{\vskip 0.1em \medskip\noindent \rule{\linewidth}{.5pt}}
+%Main Text and Session Font
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+\usepackage{sectsty}
+\sectionfont{\sffamily\fontsize{13}{15}\selectfont}
+\subsectionfont{\sffamily\fontsize{10}{5}\selectfont}
+%Style Hyperlink
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+%Internationalization to English
+\renewcommand{\figurename}{\footnotesize Figure}
+\renewcommand{\tablename}{\footnotesize Table}
+\renewcommand{\contentsname}{Contents}
+%==============STYLE ENDS==============% 

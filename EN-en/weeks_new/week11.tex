@@ -1,0 +1,174 @@
+\section{Size and Shape Optimization}
+The optimization of size and shape parameters of structural systems can also be called cross-section optimization in a more general sense. Depending on the problem, one or both of these can become parameters of the problem simultaneously.
+
+\subsection{Foundations of Size Optimization}
+Size optimization is an optimization method used to determine the optimal values of cross-sectional properties (width, height, thickness, etc.) of structural systems. This method aims to reach the optimum design by changing only the dimensions of elements without altering the topology of the structure.
+
+\subsubsection{Problem Parameters}
+Design variables used in size optimization typically include:
+\begin{itemize}
+    \item \textbf{Cross-section dimensions:} Width and height of beams, thickness of plates
+    \item \textbf{Cross-sectional areas:} Cross-sectional areas of bar elements
+    \item \textbf{Moments of inertia:} Parameters determining bending and torsional stiffness of beams
+    \item \textbf{Material properties:} Variables such as elasticity modulus, density
+    \item \textbf{Reinforcement elements:} Dimensions and locations of strengthening elements
+\end{itemize}
+
+\subsubsection{Problem Outputs}
+The outputs obtained as a result of size optimization are:
+\begin{itemize}
+    \item \textbf{Optimum cross-section dimensions:} Most suitable dimensions for each structural element
+    \item \textbf{Minimum weight/cost:} Total weight or cost of the structure obtained as a result of optimization
+    \item \textbf{Structural performance indicators:} Stresses, displacements, natural frequencies
+    \item \textbf{Material usage efficiency:} How efficiently the load-bearing capacity of each element is used
+    \item \textbf{Sensitivity information:} Effects of changes in design variables on the objective function
+\end{itemize}
+
+\subsubsection{Constraints and Decision Mechanism}
+In size optimization, various constraints limit the solution space and affect the decision mechanism:
+
+\begin{itemize}
+    \item \textbf{Stress constraints:} $\sigma_{max} \leq \sigma_{allow}$
+    \begin{itemize}
+        \item Maximum stresses in the structure must not exceed allowable values
+        \item Affects in the direction of increasing element dimensions
+    \end{itemize}
+    
+    \item \textbf{Displacement constraints:} $\delta_{max} \leq \delta_{allow}$
+    \begin{itemize}
+        \item Ensures maximum displacements in the structure remain within certain limits
+        \item Generally affects in the direction of increasing structural stiffness
+    \end{itemize}
+    
+    \item \textbf{Buckling constraints:} $P_{cr} \geq P_{design}$
+    \begin{itemize}
+        \item Ensures buckling loads of compression elements are greater than design load
+        \item Affects in the direction of increasing dimensions of slender elements
+    \end{itemize}
+    
+    \item \textbf{Frequency constraints:} $\omega_i \geq \omega_{min}$ or $\omega_i \leq \omega_{max}$
+    \begin{itemize}
+        \item Ensures natural frequencies of the structure are within certain ranges
+        \item Important in structures subjected to dynamic loads
+    \end{itemize}
+    
+    \item \textbf{Manufacturability constraints:} $x_{min} \leq x \leq x_{max}$
+    \begin{itemize}
+        \item Ensures design variables remain within practical manufacturing limits
+        \item Limits solution space with realistic values
+    \end{itemize}
+    
+    \item \textbf{Geometric constraints:} For example $h/b \leq \alpha$
+    \begin{itemize}
+        \item Ensures cross-section ratios remain within certain limits
+        \item Prevents local buckling and stability issues
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[title=Size Optimization Process]
+\begin{enumerate}
+    \item Creation of initial design
+    \item Performance evaluation with structural analysis (FEM)
+    \item Determination of effects of design variables through sensitivity analysis
+    \item Updating design variables with optimization algorithm
+    \item Repetition of steps 2-4 until convergence is achieved
+\end{enumerate}
+\end{tcolorbox}
+
+Size optimization is widely used in structural engineering applications such as cross-section optimization of steel structures, reinforcement optimization of reinforced concrete structures, and bridge and tower design. As a result of optimization, while material usage is reduced, structural performance requirements are met, thus obtaining more economical and sustainable designs.
+
+\subsection{Foundations of Shape Optimization}
+The optimization of external boundaries and internal voids of structural elements can be approached in different ways depending on the engineer's perspective.
+
+\begin{itemize}
+    \item \textbf{Boundary Representation:} Geometric parameters
+    \item \textbf{Control Points:} Shape change control
+    \item \textbf{Smoothness:} Geometric continuity
+\end{itemize}
+
+\sidenote{Shape optimization improves the geometry of the structure without changing the topology.}
+
+\subsection{Mathematical Formulation}
+Mathematical expression of size and shape optimization problems:
+
+\begin{equation}
+\begin{aligned}
+& \text{minimize} & & f(\mathbf{x}, \mathbf{s}) \\
+& \text{subject to} & & g_i(\mathbf{x}, \mathbf{s}) \leq 0, & & i = 1,\ldots,m \\
+& & & h_j(\mathbf{x}, \mathbf{s}) = 0, & & j = 1,\ldots,p \\
+& & & \mathbf{x}^L \leq \mathbf{x} \leq \mathbf{x}^U \\
+& & & \mathbf{s}^L \leq \mathbf{s} \leq \mathbf{s}^U
+\end{aligned}
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item \(\mathbf{x}\): Size parameters
+    \item \(\mathbf{s}\): Shape parameters
+    \item \(f\): Objective function
+    \item \(g_i, h_j\): Constraint functions
+\end{itemize}
+
+\subsection{Parametric Modeling}
+Mathematical representation of design variables:
+
+\begin{itemize}
+    \item \textbf{CAD Parameters:} Geometric dimensions
+    \item \textbf{Spline Curves:} Boundary representation
+    \item \textbf{Morph Box:} Shape deformation
+\end{itemize}
+
+\subsection{Sensitivity Analysis}
+In some structural optimization problems, sensitivity analysis can be performed for design variables (parameters). However, since structural optimization problems are generally hyperstatic in nature, sensitivity analyses may not yield expected results and can even be misleading. \sidenote{The issue of hyperstaticity is important from an optimization perspective. For example, a cross-section chosen for one parameter, despite being close to the limit strength, can completely affect the load distribution due to changes in the cross-section of another parameter of the structure, causing the stress of the first cross-section to fall well below or exceed the limit strength.}
+
+\subsection{Constraint Handling}
+Handling of design constraints:
+
+\begin{itemize}
+    \item \textbf{Stress Constraints:} Material strength
+    \item \textbf{Displacement Constraints:} Deformation limits
+    \item \textbf{Geometric Constraints:} Manufacturability
+\end{itemize}
+
+\subsection{Multi-Objective Optimization}
+Multi-objective optimization will be discussed in much more detail later.
+
+\begin{tcolorbox}[title=Multi-Objective Approaches]
+\begin{itemize}
+    \item \textbf{Pareto Optimization:} Trade-off analysis
+    \item \textbf{Weighted Sum:} Single objective function
+    \item \textbf{Goal Programming:} Ideal point approach
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Mesh Adaptation}
+The mesh creation process, which can often turn into a nightmare in finite element models, can sometimes be the subject of optimization. However, this topic belongs to a separate field of expertise and course.
+
+\begin{itemize}
+    \item \textbf{Mesh Quality:} Element shape control
+    \item \textbf{Adaptive Mesh:} Automatic mesh improvement
+    \item \textbf{Remeshing:} Mesh regeneration
+\end{itemize}
+
+\subsection{Manufacturability and Practical Constraints}
+Practical applicability of the design:
+
+\begin{itemize}
+    \item \textbf{Standard Sections:} Catalog selection
+    \item \textbf{Manufacturing Method:} Production constraints
+    \item \textbf{Cost:} Economic factors
+\end{itemize}
+
+\sidenote{Manufacturability constraints require balancing between theoretical optimum and practical solution, and this can be considered as a completely different optimization problem.}
+
+\subsection{Evaluation of Optimization Results}
+Analysis and interpretation of obtained results:
+
+\begin{tcolorbox}[title=Evaluation Criteria]
+\begin{itemize}
+    \item \textbf{Performance Improvement:} Gains compared to initial state
+    \item \textbf{Constraint Satisfaction:} Control of all design constraints
+    \item \textbf{Manufacturability:} Analysis of practical applicability
+    \item \textbf{Cost Analysis:} Economic evaluation
+\end{itemize}
+\end{tcolorbox} 

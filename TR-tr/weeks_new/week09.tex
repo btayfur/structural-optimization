@@ -1,0 +1,215 @@
+\section{Yapısal Optimizasyona Giriş}
+Yapısal optimizasyon, her ne kadar farklı bir optimizasyon türü olarak ele alınmış olsa da özü itibariyle tüm optimizasyon problemleriyle benzer prensiperle ilerler. Ancak problemin tanımlanması, dolayısıyla da efektif çözüm algoritmalarının seçilebilmesi mühendis yargısına bağlıdır. Bu bölümde klasik optimizasyon başlıkları altında tanımlanan kavramların yapısal optimizasyon bağlamında nasıl bir bağlama dönüştüğü anlatılmaya çalışılacaktır.
+
+\subsection{Yapısal Optimizasyon Terminolojisi}
+
+\subsubsection{Amaç Fonksiyonları}
+Yapısal optimizasyonda amaç fonksiyonu, optimize edilmek istenen mühendislik hedefini matematiksel olarak ifade eder. Yapısal tasarımda en yaygın kullanılan amaç fonksiyonları şunlardır:\sidenote{Çok amaçlı optimizasyon problemlerinde, birden fazla amaç fonksiyonu ağırlıklandırılarak tek bir fonksiyona dönüştürülebilir veya Pareto-optimal çözümler aranabilir.}
+
+\begin{itemize}
+    \item \textbf{Ağırlık minimizasyonu:} Yapının toplam ağırlığını en aza indirmeyi hedefler. Özellikle havacılık ve uzay yapılarında kritik öneme sahiptir.
+    \item \textbf{Maliyet minimizasyonu:} Yapının üretim, malzeme ve işçilik maliyetlerini en aza indirmeyi amaçlar.
+    \item \textbf{Rijitlik maksimizasyonu:} Yapının belirli yükler altında deformasyona karşı direncini en üst düzeye çıkarmayı hedefler.
+    \item \textbf{Dayanım maksimizasyonu:} Yapının taşıyabileceği maksimum yükü artırmayı amaçlar.
+    \item \textbf{Enerji sönümleme:} Dinamik yükler altında yapının enerji sönümleme kapasitesini optimize eder.
+\end{itemize}
+
+\subsubsection{Kısıtlar}
+Yapısal optimizasyonda kısıtlar, tasarımın uygulanabilir olması için sağlanması gereken şartları tanımlar. Bu kısıtlar, klasik optimizasyon problemlerindeki matematiksel kısıtların yapısal mühendislik bağlamındaki karşılıklarıdır:
+
+\begin{itemize}
+    \item \textbf{Gerilme kısıtları:} Yapıdaki gerilmelerin izin verilen maksimum değerleri aşmamasını sağlar. Örneğin: $\sigma_i \leq \sigma_{izin}$
+    
+    \item \textbf{Deplasman kısıtları:} Yapıdaki yer değiştirmelerin belirli sınırlar içinde kalmasını sağlar. Örneğin: $\delta_i \leq \delta_{izin}$
+    
+    \item \textbf{Burkulma kısıtları:} Yapı elemanlarının burkulma yüklerinin, uygulanan yüklerden belirli bir güvenlik faktörü kadar büyük olmasını sağlar.
+    
+    \item \textbf{Titreşim kısıtları:} Yapının doğal frekanslarının belirli değerlerin üzerinde veya altında olmasını sağlar.
+    
+    \item \textbf{Geometrik kısıtlar:} Yapısal optimizasyon bağlamında, tasarım değişkenlerinin fiziksel olarak uygulanabilir sınırlar içinde kalmasını sağlar. Örneğin:
+    \begin{itemize}
+        \item Minimum ve maksimum kesit boyutları
+        \item Minimum duvar kalınlıkları
+        \item Elemanlar arası bağlantı gereksinimleri\sidenote{Örneğin çelik bir yapının üst katlarında kullanılan kesit boyutları, alt katlarındaki kesit boyutlarından daha büyük olması istenebilir ve bu aplikasyon açısından da oldukça mantıklıdır.}
+        \item Montaj ve üretim kısıtlamaları
+    \end{itemize}
+    
+    \item \textbf{Denge kısıtları:} Yapının statik denge koşullarını sağlaması gerektiğini ifade eder.
+    
+    \item \textbf{Uyumluluk kısıtları:} Deformasyonların sürekli ve uyumlu olması gerektiğini belirtir.
+\end{itemize}
+
+\begin{tcolorbox}[title=Yapısal Optimizasyon Kısıtları Örneği]
+Bir köprü tasarımında:
+\begin{align}
+\sigma_{max} &\leq 250 \text{ MPa} \quad \text{(Gerilme kısıtı)} \\
+\delta_{orta} &\leq L/400 \quad \text{(Deplasman kısıtı)} \\
+f_1 &\geq 2.0 \text{ Hz} \quad \text{(Titreşim kısıtı)} \\
+t_{min} &\geq 8 \text{ mm} \quad \text{(Geometrik kısıt)}
+\end{align}
+\end{tcolorbox}
+
+\sidenote{Kısıtların matematiksel formülasyonu, sonlu eleman analizinin sonuçlarına dayalı olarak ifade edilir ve genellikle doğrusal olmayan fonksiyonlar şeklindedir.}
+
+\subsubsection{Tasarım Değişkenleri}
+Yapısal optimizasyonda tasarım değişkenleri, optimize edilecek parametreleri temsil eder. Bu değişkenler, optimizasyon algoritması tarafından değiştirilebilen ve en iyi çözümü bulmak için ayarlanabilen parametrelerdir. Yapısal mühendislikte yaygın kullanılan tasarım değişkenleri şunlardır:
+
+\begin{itemize}
+    \item \textbf{Kesit özellikleri:} 
+    \begin{itemize}
+        \item Profil boyutları (genişlik, yükseklik)
+        \item Duvar kalınlıkları
+        \item Kesit alanı
+        \item Atalet momenti
+    \end{itemize}
+    
+    \item \textbf{Malzeme özellikleri:} 
+    \begin{itemize}
+        \item Elastisite modülü
+        \item Yoğunluk
+        \item Akma dayanımı
+    \end{itemize}
+    
+    \item \textbf{Geometrik parametreler:} 
+    \begin{itemize}
+        \item Düğüm noktalarının koordinatları
+        \item Eğrilik yarıçapları
+        \item Açılar
+    \end{itemize}
+    
+    \item \textbf{Topolojik parametreler:} 
+    \begin{itemize}
+        \item Malzeme varlığı/yokluğu (0-1 değişkenleri)
+        \item Malzeme yoğunluğu (0-1 arasında değişen sürekli değişkenler)\sidenote{Optimizasyon veya regresyon benzeri birçok kodlama gerektiren hesaplama yönteminde, verilerin daha standart şekilde ele alınabilmesi için normalizasyon adlı bir yaklaşım kullanılır. Bu yaklaşım, verilerin 0-1 arasında değişen bir değer aralığına sahip olmasını sağlar. Mevcut veriler içerisindeki en küçük veri 0, en büyük veri ise 1 olarak dönüştürülür. Tüm ara değerler ise bu aralıkta oransal bir değer alır.}
+        \item Bağlantı noktalarının varlığı
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[title=Tasarım Değişkenleri Gösterimi]
+Tipik bir çelik çerçeve optimizasyonunda tasarım değişkenleri şu şekilde gösterilebilir:
+\begin{align}
+\mathbf{x} = [A_1, A_2, \ldots, A_n, I_{y1}, I_{y2}, \ldots, I_{yn}, I_{z1}, I_{z2}, \ldots, I_{zn}]^T
+\end{align}
+Burada $A_i$ kesit alanlarını, $I_{yi}$ ve $I_{zi}$ ise atalet momentlerini temsil eder.
+\end{tcolorbox}
+
+\subsection{Yapısal Optimizasyon Kategorileri}
+
+Yapısal optimizasyon problemleri kategorik olarak (Şekil, boyut, topoloji vb.) gibi bazı temel başlıklara ayrılabilir. Ancak bir mühendis, birbiriyle çelişen çıktıları üreten parametrelerin olduğu her sorunu bir optimizasyon problemi olarak ele alabilir. 
+
+Örneğin bir yapıyı hafifletmek çoğu zaman gerilme kapasitelerinden feragat etmek anlamına gelebilir. Bu çelişen çıktılar, aynı parametrelerin sonucudur.
+
+\subsubsection{Boyutlandırma Optimizasyonu}
+Boyutlandırma optimizasyonu, yapının genel geometrisi sabit tutularak elemanların kesit boyutlarının optimize edilmesidir. En temel ve yaygın kullanılan yapısal optimizasyon yaklaşımıdır.
+
+\begin{itemize}
+    \item \textbf{Tasarım değişkenleri:} Kesit alanı, kalınlık, genişlik-yükseklik gibi kesit özellikleri
+    \item \textbf{Avantajları:} 
+    \begin{itemize}
+        \item Matematiksel olarak nispeten daha basit formülasyon
+        \item Mevcut tasarımların iyileştirilmesi için uygun
+        \item Endüstride yaygın kullanım
+    \end{itemize}
+    \item \textbf{Uygulama alanları:} Çelik yapılar, çerçeve sistemler, kafes sistemler
+\end{itemize}
+
+
+\subsubsection{Şekil Optimizasyonu}
+Şekil optimizasyonu, yapı elemanlarının şekillerinin veya düğüm noktalarının konumlarının değiştirilmesiyle gerçekleştirilir. Yapının genel topolojisi korunurken sınır geometrisi değiştirilir.
+
+\begin{itemize}
+    \item \textbf{Tasarım değişkenleri:} Düğüm noktalarının koordinatları, eğrilik parametreleri, kontrol noktaları
+    \item \textbf{Avantajları:} 
+    \begin{itemize}
+        \item Boyutlandırma optimizasyonuna göre daha fazla tasarım esnekliği
+        \item Gerilme yoğunlaşmalarının azaltılmasında etkili
+    \end{itemize}
+    \item \textbf{Zorluklar:} 
+    \begin{itemize}
+        \item Geometrik değişimler sonlu eleman ağının yeniden oluşturulmasını gerektirebilir
+        \item Karmaşık matematiksel formülasyon
+    \end{itemize}
+    \item \textbf{Uygulama alanları:} Havacılık yapıları, otomotiv parçaları, köprü konstrüksiyonları
+\end{itemize}
+
+\subsubsection{Topoloji Optimizasyonu}
+Topoloji optimizasyonu, yapının temel yapısının veya topolojisinin değiştirilmesiyle gerçekleştirilir. Malzemenin yapı içindeki dağılımı optimize edilir ve genellikle malzemenin olması veya olmaması gereken bölgeler belirlenir.
+
+\begin{itemize}
+    \item \textbf{Tasarım değişkenleri:} Malzeme yoğunluğu, malzeme varlığı/yokluğu
+    \item \textbf{Avantajları:} 
+    \begin{itemize}
+        \item En yüksek tasarım serbestliği
+        \item Yenilikçi ve öngörülemeyen tasarımlar üretebilme
+        \item Malzeme kullanımında önemli tasarruf potansiyeli
+    \end{itemize}
+    \item \textbf{Zorluklar:} 
+    \begin{itemize}
+        \item Matematiksel ve hesaplamalı olarak karmaşık
+        \item Üretilebilirlik kısıtlarının uygulanması zor olabilir
+        \item Sonuçların yorumlanması ve uygulanabilir tasarımlara dönüştürülmesi
+    \end{itemize}
+    \item \textbf{Uygulama alanları:} Havacılık, otomotiv, medikal implantlar, 3D baskı yapıları
+\end{itemize}
+
+
+\begin{tcolorbox}[title=Örnek: Konsol Kiriş Optimizasyonu]
+Aynı konsol kiriş probleminin üç farklı yaklaşımla optimizasyonu:
+
+\textbf{Boyutlandırma:} Kiriş kesitinin yüksekliğinin uzunluk boyunca değişimi optimize edilir.
+
+\textbf{Şekil:} Kirişin alt ve üst yüzeylerinin şekli optimize edilir.
+
+\textbf{Topoloji:} Kirişin iç yapısındaki malzeme dağılımı optimize edilir, sonuçta genellikle kafes benzeri bir yapı ortaya çıkar.
+\end{tcolorbox}
+
+\subsection{Yapısal Optimizasyon Formülasyonu}
+
+Bir yapısal optimizasyon problemi, matematiksel olarak şu şekilde ifade edilebilir:
+
+\begin{align}
+\text{Minimize: } & f(\mathbf{x}) \\
+\text{Kısıtlar: } & g_j(\mathbf{x}) \leq 0, \quad j = 1, 2, \ldots, m \\
+& h_k(\mathbf{x}) = 0, \quad k = 1, 2, \ldots, p \\
+& \mathbf{x}_L \leq \mathbf{x} \leq \mathbf{x}_U
+\end{align}
+
+Burada:
+\begin{itemize}
+    \item $\mathbf{x}$ : tasarım değişkenleri vektörü
+    \item $f(\mathbf{x})$ : amaç fonksiyonu (minimizasyon problemi için)
+    \item $g_j(\mathbf{x})$ : eşitsizlik kısıtları
+    \item $h_k(\mathbf{x})$ : eşitlik kısıtları
+    \item $\mathbf{x}_L$ ve $\mathbf{x}_U$ : tasarım değişkenlerinin alt ve üst sınırları
+\end{itemize}
+
+\subsubsection{Sonlu Eleman Analizi ile Bağlantı}
+Yapısal optimizasyon problemlerinde, amaç fonksiyonu ve kısıtlar genellikle sonlu eleman analizi (FEA) sonuçlarına bağlıdır. Bu bağlantı aşağıdaki şekilde ifade edilebilir:
+
+\begin{align}
+\mathbf{K}(\mathbf{x}) \mathbf{u} &= \mathbf{F} \\
+f(\mathbf{x}) &= f(\mathbf{x}, \mathbf{u}(\mathbf{x})) \\
+g_j(\mathbf{x}) &= g_j(\mathbf{x}, \mathbf{u}(\mathbf{x})) \\
+h_k(\mathbf{x}) &= h_k(\mathbf{x}, \mathbf{u}(\mathbf{x}))
+\end{align}
+
+Burada:
+\begin{itemize}
+    \item $\mathbf{K}(\mathbf{x})$ : tasarım değişkenlerine bağlı rijitlik matrisi
+    \item $\mathbf{u}$ : deplasman vektörü
+    \item $\mathbf{F}$ : dış kuvvet vektörü
+\end{itemize}
+
+\begin{tcolorbox}[title=Yapısal Optimizasyon Algoritması Seçimi]
+Yapısal optimizasyon problemlerinde algoritma seçimi şu faktörlere bağlıdır:
+\begin{itemize}
+    \item Problem boyutu (tasarım değişkeni sayısı)
+    \item Kısıt sayısı ve karmaşıklığı
+    \item Fonksiyon değerlendirmelerinin hesaplama maliyeti
+    \item Tasarım uzayının karakteristiği (çoklu yerel optimumların varlığı)
+    \item Duyarlılık bilgisinin mevcudiyeti
+\end{itemize}
+\end{tcolorbox}
+
+
+

@@ -1,0 +1,165 @@
+\section{Metaheuristic Optimization Algorithms I}
+Nature-inspired modern algorithms used in solving complex optimization problems will be discussed in this section. These algorithms provide effective solutions when classical methods prove insufficient.
+
+\subsection{Basic Characteristics of Metaheuristic Algorithms}
+
+Metaheuristic algorithms are nature-inspired methods used in solving complex optimization problems:
+
+\begin{itemize}
+    \item Have stochastic characteristics
+    \item Problem-independent structure
+    \item Do not require gradient information
+    \item Potential to reach global optimum
+\end{itemize}
+
+\sidenote{The most important characteristic of metaheuristic algorithms is their potential to reach the global optimum without getting stuck in local optima in complex and multimodal problems.}
+
+\subsection{Differences Between Deterministic and Stochastic Algorithms}
+
+\begin{tcolorbox}[title=Deterministic vs Stochastic]
+\begin{itemize}
+    \item \textbf{Deterministic:}
+        \begin{itemize}
+            \item Same starting point → Same result
+            \item Gradient-based
+            \item Fast convergence to local optimum
+        \end{itemize}
+    \item \textbf{Stochastic:}
+        \begin{itemize}
+            \item Random search
+            \item Different result in each run
+            \item Global optimum potential
+        \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Classification of Metaheuristic Algorithms Based on Search Method}
+
+Metaheuristic algorithms are fundamentally divided into two categories based on search methods: population-based and single-solution search algorithms. Population-based algorithms evaluate multiple solution candidates simultaneously, while single-solution search algorithms work on a single solution. This classification provides an important framework for understanding the working principles and optimization strategies of algorithms.\sidenote{
+This context can be examined through the link to better understand the working principles of algorithms.    
+
+\qrcode[height=1in]{https://github.com/btayfur/structural-optimization/blob/main/Code/Examples/Exmp3}}
+
+\subsubsection{Population-Based Algorithms}
+
+Population-based algorithms are methods that evaluate multiple solution candidates simultaneously during the optimization process and benefit from interactions between these solutions. These algorithms increase the probability of reaching the global optimum by exploring different regions of the search space simultaneously. Population-based approaches reduce the risk of getting stuck in local optima by maintaining the diversity of solution candidates and provide effective results in complex, multimodal problems.
+
+The most common examples of population-based algorithms include Genetic Algorithms, Particle Swarm Optimization, and Differential Evolution. In these algorithms, each individual (solution candidate) in the population evolves according to specific rules and interacts with others. For example, Genetic Algorithms use crossover and mutation operators, while in Particle Swarm Optimization, particles move by benefiting from their own experience and the collective knowledge of the swarm. These interactions ensure that the algorithm uses both exploration and exploitation capabilities in a balanced way.
+
+\subsubsection{Single-Solution Search Based}
+
+Single-solution search based algorithms are methods that work on a single solution candidate during the optimization process and improve this solution step by step. These algorithms progress toward a better solution by evaluating potential solutions in the neighborhood of the current solution. The single-solution search approach generally offers advantages such as lower memory usage and faster iteration times, but carries the risk of getting stuck in local optima.
+
+The most common single-solution search based metaheuristic algorithms include Simulated Annealing, Tabu Search, and Variable Neighborhood Search. Simulated Annealing, inspired by the annealing process of metals, accepts poor solutions with a certain probability at the beginning and gradually reduces this probability over time. Tabu Search prevents cyclic movements by marking recently visited solutions as "tabu" and enables exploration of wider regions of the search space.
+
+\begin{tcolorbox}[title=Characteristics of Single-Solution Search Based Algorithms]
+\begin{itemize}
+    \item \textbf{Advantages:}
+        \begin{itemize}
+            \item Low memory requirement
+            \item Fast iteration times
+            \item Simple implementation
+            \item Local search capabilities
+        \end{itemize}
+    \item \textbf{Disadvantages:}
+        \begin{itemize}
+            \item Risk of getting stuck in local optima
+            \item Limited exploration ability in wide search spaces
+            \item Dependence on initial solution
+        \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+Additionally, for these types of meta-heuristic algorithms to be successful, some mechanisms to avoid local optima are generally developed. For example, the temperature parameter in the Simulated Annealing algorithm allows escaping from local optima by moving away from the current best solution. In this algorithm specifically, this probability is higher in early iterations and decreases in later iterations. Similarly, many algorithms contain different forms of mechanisms to avoid local optima.
+
+\subsection{Classification of Metaheuristic Algorithms Based on Search Strategy}
+
+\subsubsection{Global Search Focused Algorithms}
+
+Global search focused algorithms are methods that focus on exploring a large portion of the solution space. These algorithms aim to reach the global optimum by systematically or randomly sampling different regions of the search space. Global search strategies are particularly important in reducing the risk of getting stuck in local optima, especially in multimodal and complex optimization problems. This approach helps identify regions where potentially better solutions might be found by exploring a wider portion of the search space.
+
+Population-based methods such as Genetic Algorithms and Particle Swarm Optimization naturally have global search capabilities. For example, in Genetic Algorithms, high mutation rates and diversity preservation strategies increase the algorithm's exploration ability. Similarly, appropriate values of control parameters (F and CR) in the Differential Evolution algorithm strengthen the algorithm's global search ability. These algorithms tend to explore wide regions of the search space, especially in the initial stages, and focus on more promising regions over time. Global search strategies, although computationally expensive, offer the potential to reach higher quality solutions, especially in previously unknown or complex optimization problems.
+
+\subsubsection{Local Search Focused Algorithms}
+
+Local search focused algorithms are methods that aim to reach better solutions by investigating the immediate vicinity of the current best solution in detail. These algorithms aim to find the best solution (local optimum) in a specific region by intensively researching that region. Local search generally provides faster convergence and is more computationally efficient. It is particularly effective in unimodal problems or when there is prior knowledge about the global optimum region.
+
+Algorithms such as Hill Climbing, Simulated Annealing, and Tabu Search primarily use local search strategies. In these algorithms, potential solutions in the neighborhood of the current solution are evaluated, and the next step is selected according to specific criteria. For example, in Tabu Search, a tabu list is maintained to prevent re-evaluation of previously visited solutions; this prevents the algorithm from getting stuck in local optima and enables more effective exploration of the search space. Particularly in structural optimization problems, when gradient information can be used, local search strategies can converge quickly from a given starting point. However, the success of these algorithms largely depends on the selection of the starting point, and the risk of getting stuck in local optima is high in complex, multimodal problems.
+
+\subsubsection{Hybrid Search}
+
+Hybrid search strategies aim to increase the effectiveness of the optimization process by combining the strengths of global and local search methods. In this approach, potential solution regions are typically determined by performing global search in the initial stages of the algorithm, and then local search techniques are applied to improve solutions in these regions. Hybrid strategies provide a balanced way to both explore the wide search space (exploration) and investigate promising regions in detail (exploitation).
+
+Memetic Algorithms are a good example of hybrid search strategies. These algorithms explore the wide search space using evolutionary methods like Genetic Algorithms, then apply local search techniques to each individual (solution candidate) to improve solutions. Similarly, hybrid versions of Particle Swarm Optimization and Gradient Descent methods have been developed. These hybrid approaches provide successful results in complex engineering problems, especially in areas like structural optimization. For example, in topology optimization, the general structure is first determined using a metaheuristic algorithm, then detailed optimization is performed using mathematical programming techniques. Hybrid search strategies provide more effective results than global or local search strategies alone by providing a better balance between computational efficiency and solution quality.
+
+\subsection{Classification of Metaheuristic Algorithms Based on Nature-Inspired Sources}
+
+\subsubsection{Biological Evolution Based}
+
+Biological evolution based algorithms are optimization methods developed inspired by Darwin's theory of natural selection and evolution. These algorithms attempt to solve optimization problems by mimicking the adaptation process of living organisms to environmental conditions over generations. The most basic evolutionary algorithm, the Genetic Algorithm, uses operators inspired by biological evolution: selection, crossover, and mutation. Through these operators, the algorithm evolves the population over generations and ensures the survival of individuals more suitable according to the objective function.
+
+Other evolutionary algorithms such as Differential Evolution, Evolution Strategies, and Genetic Programming apply similar principles in different ways. For example, the Differential Evolution algorithm produces new solutions using vector differences between population members and thus adapts to the characteristics of the search space. Evolution Strategies, on the other hand, improve their performance by using self-adapting mutation parameters, especially in continuous optimization problems. These algorithms are particularly effective in multidimensional, discontinuous, and multimodal optimization problems. Additionally, the ease of adjusting their parameters and adaptability to different problem types enables their widespread use in engineering fields such as structural optimization, mechanical design, and materials science.
+
+\subsubsection{Swarm Intelligence Based}
+
+Swarm intelligence based algorithms are optimization methods developed inspired by the collective behaviors of swarm-living organisms in nature. In these algorithms, complex and intelligent behaviors emerge as a result of interactions between individuals with simple rules. Particle Swarm Optimization (PSO), inspired by the movements of birds and fish schools, is the most popular swarm intelligence algorithm. In PSO, each particle updates its movement using information about its own best position and the global best position of the swarm. This collective intelligence enables the swarm to quickly find the most efficient resources (optimum points).
+
+Ant Colony Optimization simulates ants' behavior of finding the shortest path using pheromone trails and is particularly effective in combinatorial optimization problems. The Artificial Bee Colony algorithm, inspired by honey bees' nectar collection strategy, enables the exploration of different solution regions and more intensive investigation of efficient regions. The Firefly Algorithm mimics the brightness and attraction principles of fireflies, while the Bat Algorithm simulates bats' echolocation methods. These swarm intelligence based algorithms generally stand out with their ease of application, few control parameters, and global optimization capabilities. They provide successful results particularly in engineering applications such as robot trajectory planning, energy systems optimization, and sensor network positioning.
+
+\subsubsection{Physics Process Inspired}
+
+Physics process inspired algorithms are optimization methods developed based on physical phenomena and laws in nature. These algorithms apply principles from different physics fields such as thermodynamics, mechanics, electromagnetism, and quantum physics to optimization problems. Simulated Annealing, inspired by the annealing process of metals, is one of the oldest physics-based algorithms. This algorithm mimics the transition of the molecular structure to a low-energy state while the metal is heated to high temperature and slowly cooled. The algorithm, which accepts poor solutions with a high "temperature" parameter at the beginning, becomes more selective as it "cools" over time and increases the chance of converging to the global optimum.
+
+The Gravitational Search Algorithm is based on Newton's universal law of gravitation and simulates mass interactions between solution candidates. The Harmony Search algorithm is inspired by musicians' process of creating harmonious tones during improvisation. The Big Bang-Big Crunch algorithm mimics the expansion and contraction cycles of the universe, while the Water Cycle Algorithm adapts water's evaporation, precipitation, and flow processes to the optimization process. These physics-based algorithms tend to provide stable and reliable results because they are generally based on well-defined mathematical principles. They are widely used in solving complex and multivariable problems, particularly in engineering design, signal processing, and structural optimization.
+
+\subsubsection{Chemical, Biological, or Social Process Inspired}
+
+Chemical, biological, or social process inspired metaheuristic algorithms mimic the behaviors of various complex systems in nature and society. Chemical Reaction Optimization is based on molecules' kinetic energy, collisions, and chemical reactions. This algorithm aims to find global minima in optimization problems by mimicking molecules' tendency to reach low-energy states. Among biological process inspired algorithms, Bacterial Foraging Optimization, which simulates bacteria's food search strategies, and Artificial Immune System algorithms, which mimic the immune system's antigen-antibody responses, can be mentioned.
+
+Social process inspired algorithms model human communities' behaviors and social interactions. Teaching-Learning-Based Optimization simulates teacher-student interaction in a classroom, while the Imperialist Competitive Algorithm mimics imperialist countries' struggle for dominance over colonies. Social Group Optimization models human groups' problem-solving methods, while the Artificial Bee Colony algorithm adapts bee colonies' nectar collection strategies to the optimization process. The common feature of these algorithms is that they produce effective solutions in multidimensional and multimodal search spaces by using emergent behaviors in complex systems. They achieve successful results particularly in data mining, neural network training, robotics, and artificial intelligence applications.
+
+\subsection{Classification of Metaheuristic Algorithms Based on Exploration and Exploitation Balance}
+
+The success of metaheuristic algorithms critically depends on establishing the right balance between exploration and exploitation. Exploration refers to the investigation of unexplored regions of the search space, while exploitation covers the more detailed examination of previously discovered and promising regions. The balance between these two processes directly affects the algorithm's performance. Exploration-heavy algorithms can scan the wide search space more comprehensively and increase the probability of reaching the global optimum, but their convergence rates are generally low. Exploitation-heavy algorithms provide fast convergence in specific regions but carry the risk of getting stuck in local optima.
+
+Most metaheuristic algorithms dynamically adjust the balance between exploration and exploitation throughout the optimization process. For example, in Genetic Algorithms, the mutation operator increases exploration ability, while the crossover operator supports the exploitation process. In Particle Swarm Optimization, the inertia weight and acceleration coefficients control this balance. In the Simulated Annealing algorithm, the decrease in the temperature parameter over time enables the algorithm to transition from exploration-heavy behavior to exploitation-heavy behavior. Algorithms should be designed to balance these two processes according to problem characteristics and the stage of the optimization process. In engineering applications such as structural optimization, especially in complex and multimodal problems, establishing the right balance between exploration and exploitation plays a determining role in reaching the global optimum and computational efficiency.
+
+\subsection{Hyperparameter Tuning of Algorithms}
+
+Variables that directly affect the performance of metaheuristic algorithms and are determined by the user are called hyperparameters. These parameters significantly affect the algorithm's behavior, convergence speed, and solution quality. For example, population size, mutation rate, and crossover rate in Genetic Algorithms; inertia weight and learning factors in PSO; initial temperature and cooling rate in Simulated Annealing are hyperparameters. Determining the optimal values of these parameters is critical for the algorithm's success and generally varies according to problem characteristics.
+
+\subsubsection{Parameter Selection Strategies}
+\begin{itemize}
+    \item Experimental analysis
+    \item Adaptive tuning
+    \item Meta-optimization
+    \item Statistical design
+\end{itemize}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}
+\draw[->] (0,0) -- (4,0) node[right] {Parameter};
+\draw[->] (0,0) -- (0,4) node[above] {Performance};
+\draw[scale=1,domain=0:4,smooth,variable=\x,blue] 
+    plot ({\x},{2*exp(-0.5*(\x-2)^2)});
+\end{tikzpicture}
+\caption{Relationship between parameter value and performance}
+\label{fig:parameter_performance}
+\end{marginfigure}
+
+\subsection{Objective Comparison of Optimization Algorithms}
+
+The objective comparison of metaheuristic optimization algorithms' performances is of great importance for algorithm selection and development. This comparison is made using standard test functions, real-world problems, and statistical analysis methods. Standard test functions (Benchmark functions) provide problems at different difficulty levels and with different characteristics (multimodal, discontinuous, noisy, etc.), enabling the evaluation of algorithms' performances under various conditions. Common test functions such as Sphere, Rastrigin, Rosenbrock, and Ackley are used to test algorithms' global optimization capabilities, convergence speeds, and exploration-exploitation balances.
+
+In the objective comparison of algorithms, a comprehensive evaluation approach including various problem types and multiple performance criteria should be adopted rather than a single test problem or performance metric. For this purpose, different performance metrics such as solution quality, convergence speed, computational cost, robustness, and scalability are evaluated together. Statistical significance tests (t-test, Wilcoxon signed-rank test, etc.) are used to determine whether performance differences between algorithms result from random variability or a real superiority. Additionally, algorithms' behaviors at different problem dimensions and constraint conditions are also an important part of the comparison.
+
+The No Free Lunch theorem states that no optimization algorithm can be superior to others in all problem classes. Therefore, the comparison of algorithms should focus on determining which algorithm is more suitable for specific problem types or application areas. In engineering fields such as structural optimization, mechanical design, and materials science, choosing an algorithm suitable for problem characteristics is critical in terms of solution quality and computational efficiency. Objective comparison studies guide the algorithm development process by revealing the advantages and disadvantages of newly developed algorithms compared to existing methods and ensure the selection of the most appropriate algorithm for the specific application area.
+
+\subsubsection{Comparison Criteria}
+\begin{itemize}
+    \item Convergence speed
+    \item Solution quality
+    \item Computational cost
+    \item Parameter sensitivity
+\end{itemize} 

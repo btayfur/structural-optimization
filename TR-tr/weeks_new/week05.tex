@@ -1,0 +1,166 @@
+\section{Metasezgisel Optimizasyon Algoritmaları I}
+Doğadan esinlenen ve karmaşık optimizasyon problemlerinin çözümünde kullanılan modern algoritmalar, bu bölümde ele alınacaktır. Bu algoritmalar, klasik yöntemlerin yetersiz kaldığı durumlarda etkili çözümler sunar.
+
+\subsection{Metasezgisel Algoritmaların Temel Özellikleri}
+
+Metasezgisel algoritmalar, karmaşık optimizasyon problemlerinin çözümünde kullanılan, doğadan esinlenmiş yöntemlerdir:
+
+\begin{itemize}
+    \item Stokastik karaktere sahip
+    \item Problem-bağımsız yapı
+    \item Gradyan bilgisi gerektirmez
+    \item Global optimuma ulaşma potansiyeli
+\end{itemize}
+
+\sidenote{Metasezgisel algoritmaların en önemli özelliği, karmaşık ve çok modlu problemlerde lokal optimumlara takılmadan global optimuma ulaşabilme potansiyelleridir.}
+
+\subsection{Deterministik ve Stokastik Algoritmaların Farkları}
+
+\begin{tcolorbox}[title=Deterministik vs Stokastik]
+\begin{itemize}
+    \item \textbf{Deterministik:}
+        \begin{itemize}
+            \item Aynı başlangıç → Aynı sonuç
+            \item Gradyan tabanlı
+            \item Lokal optimuma hızlı yakınsama
+        \end{itemize}
+    \item \textbf{Stokastik:}
+        \begin{itemize}
+            \item Rastgele arama
+            \item Her çalıştırmada farklı sonuç
+            \item Global optimum potansiyeli
+        \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Arama Yöntemi Açısından Metasezgisel Algoritmaların Sınıflandırılması}
+Metasezgisel algoritmalar, arama yöntemleri açısından temel olarak iki kategoriye ayrılır: popülasyon tabanlı ve tekil arama temelli algoritmalar. Popülasyon tabanlı algoritmalar birden fazla çözüm adayını eş zamanlı olarak değerlendirirken, tekil arama temelli algoritmalar tek bir çözüm üzerinde çalışır. Bu sınıflandırma, algoritmaların çalışma prensiplerini ve optimizasyon stratejilerini anlamak için önemli bir çerçeve sunar.\sidenote{
+Bu bağlamda algoritmaların çalışma prensiplerini daha iyi anlayabilmek için bağlantıdaki örnek incelenebilir.    
+
+
+\qrcode[height=1in]{https://github.com/btayfur/structural-optimization/blob/main/Code/Examples/Exmp3}}
+
+\subsubsection{Popülasyon Tabanlı Algoritmalar}
+Popülasyon tabanlı algoritmalar, optimizasyon sürecinde birden fazla çözüm adayını eş zamanlı olarak değerlendiren ve bu çözümler arasındaki etkileşimlerden faydalanan yöntemlerdir. Bu algoritmalar, arama uzayının farklı bölgelerini aynı anda keşfederek global optimuma ulaşma olasılığını artırır. Popülasyon tabanlı yaklaşımlar, çözüm adaylarının çeşitliliğini koruyarak lokal optimumlara takılma riskini azaltır ve karmaşık, çok modlu problemlerde etkili sonuçlar verir.
+
+Popülasyon tabanlı algoritmaların en yaygın örnekleri arasında Genetik Algoritmalar, Parçacık Sürü Optimizasyonu ve Diferansiyel Evrim bulunur. Bu algoritmalarda, popülasyondaki her birey (çözüm adayı) belirli kurallara göre evrilir ve birbirleriyle etkileşime girer. Örneğin, Genetik Algoritmalarda çaprazlama ve mutasyon operatörleri kullanılırken, Parçacık Sürü Optimizasyonunda parçacıklar kendi deneyimlerinden ve sürünün kolektif bilgisinden yararlanarak hareket eder. Bu etkileşimler, algoritmanın hem keşif (exploration) hem de sömürü (exploitation) yeteneklerini dengeli bir şekilde kullanmasını sağlar.
+
+
+\subsubsection{Tekil Arama Temelli}
+
+Tekil arama temelli algoritmalar, optimizasyon sürecinde tek bir çözüm adayı üzerinde çalışan ve bu çözümü adım adım iyileştiren yöntemlerdir. Bu algoritmalar, mevcut çözümün komşuluğundaki potansiyel çözümleri değerlendirerek, daha iyi bir çözüme doğru ilerler. Tekil arama yaklaşımı, genellikle daha az bellek kullanımı ve daha hızlı iterasyon süreleri gibi avantajlar sunar, ancak lokal optimumlara takılma riski taşır.
+
+En yaygın tekil arama temelli metasezgisel algoritmalar arasında Tavlama Benzetimi (Simulated Annealing), Tabu Araması (Tabu Search) ve Değişken Komşuluk Araması (Variable Neighborhood Search) bulunur. Tavlama Benzetimi, metallerin tavlama işleminden esinlenerek, başlangıçta kötü çözümleri de belirli bir olasılıkla kabul eder ve zamanla bu olasılığı azaltır. Tabu Araması, yakın zamanda ziyaret edilen çözümleri "tabu" olarak işaretleyerek döngüsel hareketleri engeller ve arama uzayının daha geniş bölgelerini keşfetmeyi sağlar.
+
+\begin{tcolorbox}[title=Tekil Arama Temelli Algoritmaların Özellikleri]
+\begin{itemize}
+    \item \textbf{Avantajlar:}
+        \begin{itemize}
+            \item Düşük bellek gereksinimi
+            \item Hızlı iterasyon süreleri
+            \item Basit implementasyon
+            \item Yerel arama yetenekleri
+        \end{itemize}
+    \item \textbf{Dezavantajlar:}
+        \begin{itemize}
+            \item Lokal optimumlara takılma riski
+            \item Geniş arama uzaylarında sınırlı keşif yeteneği
+            \item Başlangıç çözümüne bağımlılık
+        \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+Ayrıca bu tip meta-sezgisel algoritmaların başarılı olabilmesi için genellikle bazı lokal optimumdan kaçınma mekanizmaları geliştirilir. Örneğin Tavlama benzetimi algoritması içindeki sıcaklık parametresi, mevcut en iyi çözümden uzaklaşarak lokal optimumdan kaçınmayı sağlar. Bu algoritma özelinde bu olasılık erken iterasyonlarda daha yüksekken, sonraki iterasyonlarda azalır. Benzer şekilde birçok algoritma farklı biçimlerde lokal optimumlardan kaçınma mekanizmaları barındırır.
+
+
+\subsection{Arama Stratejisi Açısından Metasezgisel Algoritmaların Sınıflandırılması}
+
+\subsubsection{Küresel (Global) arama odaklı algoritmalar}
+
+Küresel arama odaklı algoritmalar, çözüm uzayının geniş bir bölümünü keşfetmeye odaklanan yöntemlerdir. Bu algoritmalar, arama uzayının farklı bölgelerini sistematik veya rastgele bir şekilde örnekleyerek global optimuma ulaşmayı hedefler. Küresel arama stratejileri, özellikle çok modlu ve karmaşık optimizasyon problemlerinde, lokal optimumlara takılma riskini azaltmak için önemlidir. Bu yaklaşım, arama uzayının daha geniş bir kısmını keşfederek, potansiyel olarak daha iyi çözümlerin bulunduğu bölgeleri belirlemeye yardımcı olur.
+
+Genetik Algoritmalar ve Parçacık Sürü Optimizasyonu gibi popülasyon tabanlı yöntemler, doğal olarak küresel arama yeteneklerine sahiptir. Örneğin, Genetik Algoritmalarda yüksek mutasyon oranı ve çeşitlilik koruma stratejileri, algoritmanın keşif yeteneğini artırır. Benzer şekilde, Diferansiyel Evrim algoritmasında kontrol parametrelerinin (F ve CR) uygun değerleri, algoritmanın global arama yeteneğini güçlendirir. Bu algoritmalar, özellikle başlangıç aşamalarında, arama uzayının geniş bölgelerini keşfetme eğilimindedir ve zaman içinde daha umut verici bölgelere odaklanır. Küresel arama stratejileri, hesaplama maliyeti yüksek olsa da, özellikle önceden bilinmeyen veya karmaşık optimizasyon problemlerinde, daha kaliteli çözümlere ulaşma potansiyeli sunar.
+
+\subsubsection{Yerel arama odaklı algoritmalar}
+
+Yerel arama odaklı algoritmalar, mevcut en iyi çözümün yakın çevresini detaylı bir şekilde araştırarak daha iyi çözümlere ulaşmayı hedefleyen yöntemlerdir. Bu algoritmalar, belirli bir bölgeyi yoğun şekilde araştırarak, o bölgedeki en iyi çözümü (yerel optimum) bulmayı amaçlar. Yerel arama, genellikle daha hızlı yakınsama sağlar ve hesaplama açısından daha verimlidir. Özellikle tek modlu problemlerde veya global optimum bölgesi hakkında önceden bilgi sahibi olunduğunda etkili sonuçlar verir.
+
+Tepe tırmanma, benzetilmiş tavlama ve tabu araması gibi algoritmalar, temel olarak yerel arama stratejileri kullanır. Bu algoritmalarda, mevcut çözümün komşuluğundaki çözümler değerlendirilir ve belirli kriterlere göre bir sonraki adım seçilir. Örneğin, tabu aramasında, daha önce ziyaret edilen çözümlerin tekrar değerlendirilmesini önlemek için bir tabu listesi tutulur; bu, algoritmanın yerel optimumlara takılmasını engeller ve arama uzayının daha etkin bir şekilde araştırılmasını sağlar. Özellikle yapısal optimizasyon problemlerinde, gradient bilgisinin kullanılabildiği durumlarda, yerel arama stratejileri, belirli bir başlangıç noktasından itibaren hızlı bir şekilde yakınsayabilir. Ancak, bu algoritmaların başarısı, büyük ölçüde başlangıç noktasının seçimine bağlıdır ve karmaşık, çok modlu problemlerde lokal optimumlara takılma riski yüksektir.
+
+\subsubsection{Karma (Hybrid) arama}
+
+Karma arama stratejileri, küresel ve yerel arama yöntemlerinin güçlü yönlerini birleştirerek, optimizasyon sürecinin etkinliğini artırmayı hedefler. Bu yaklaşımda, genellikle algoritmanın başlangıç aşamalarında küresel arama yapılarak potansiyel çözüm bölgeleri belirlenir, daha sonra bu bölgelerde yerel arama teknikleri uygulanarak çözümler iyileştirilir. Karma stratejiler, hem geniş arama uzayının keşfedilmesini (exploration) hem de umut vadeden bölgelerin detaylı araştırılmasını (exploitation) dengeli bir şekilde sağlar.
+
+Memetik Algoritmalar, karma arama stratejilerine iyi bir örnektir. Bu algoritmalar, Genetik Algoritmalar gibi evrimsel yöntemleri kullanarak geniş arama uzayını keşfeder, ardından her bireye (çözüm adayına) yerel arama teknikleri uygulayarak çözümleri iyileştirir. Benzer şekilde, Parçacık Sürü Optimizasyonu ve Gradyan İniş yöntemlerinin hibrit versiyonları da geliştirilmiştir. Bu hibrit yaklaşımlar, karmaşık mühendislik problemlerinde, özellikle de yapısal optimizasyon gibi alanlarda başarılı sonuçlar vermektedir. Örneğin, topoloji optimizasyonunda, önce metasezgisel bir algoritma ile genel yapı belirlenir, ardından matematik programlama teknikleri ile detaylı optimizasyon gerçekleştirilir. Karma arama stratejileri, hesaplama verimliliği ve çözüm kalitesi arasında daha iyi bir denge sağlayarak, tek başına küresel veya yerel arama stratejilerine göre daha etkili sonuçlar elde edilmesine olanak tanır.
+
+\subsection{Doğa Kaynaklı İlhamlara Göre Metasezgisel Algoritmaların Sınıflandırılması}
+
+\subsubsection{Biyolojik evrim temelli}
+
+Biyolojik evrim temelli algoritmalar, Darwin'in doğal seleksiyon ve evrim teorisinden esinlenerek geliştirilmiş optimizasyon yöntemleridir. Bu algoritmalar, doğadaki canlıların nesiller boyunca çevresel koşullara adaptasyon sürecini taklit ederek optimizasyon problemlerini çözmeye çalışır. En temel evrimsel algoritma olan Genetik Algoritma, biyolojik evrimden esinlenen operatörleri kullanır: seçilim (selection), çaprazlama (crossover) ve mutasyon (mutation). Bu operatörler aracılığıyla, algoritma popülasyonu nesiller boyunca evrimleştirir ve amaç fonksiyonuna göre daha uygun bireylerin hayatta kalmasını sağlar.
+
+Diferansiyel Evrim, Evrim Stratejileri ve Genetik Programlama gibi diğer evrimsel algoritmalar da benzer prensipleri farklı şekillerde uygular. Örneğin, Diferansiyel Evrim algoritması, popülasyon üyeleri arasındaki vektör farklarını kullanarak yeni çözümler üretir ve bu sayede arama uzayının özelliklerine uyum sağlar. Evrim Stratejileri ise özellikle sürekli optimizasyon problemlerinde, kendi kendine adapte olan mutasyon parametreleri kullanarak performansını artırır. Bu algoritmalar, özellikle çok boyutlu, süreksiz ve çok modlu optimizasyon problemlerinde etkilidir. Ayrıca, parametrelerinin kolayca ayarlanabilmesi ve farklı problem türlerine uyarlanabilmesi, bu algoritmaların yapısal optimizasyon, mekanik tasarım ve malzeme bilimi gibi mühendislik alanlarında yaygın kullanımını sağlamaktadır.
+
+\subsubsection{Sürü zekâsı temelli}
+
+Sürü zekâsı temelli algoritmalar, doğadaki sürü halinde yaşayan canlıların kolektif davranışlarından esinlenerek geliştirilmiş optimizasyon yöntemleridir. Bu algoritmalarda, basit kurallara sahip bireyler arasındaki etkileşimler sonucunda, karmaşık ve zeki davranışlar ortaya çıkar. Parçacık Sürü Optimizasyonu (PSO), kuşların ve balık sürülerinin hareketlerinden esinlenerek geliştirilmiş en popüler sürü zekâsı algoritmasıdır. PSO'da her parçacık, kendi en iyi pozisyonu ve sürünün global en iyi pozisyonu hakkındaki bilgileri kullanarak hareketini günceller. Bu kolektif zekâ, sürünün en verimli kaynakları (optimum noktaları) hızla bulmasını sağlar.
+
+Karınca Kolonisi Optimizasyonu, karıncaların feromon izlerini kullanarak en kısa yolu bulma davranışını simüle eder ve özellikle kombinatoryal optimizasyon problemlerinde etkilidir. Yapay Arı Kolonisi algoritması ise bal arılarının nektar toplama stratejisinden esinlenerek, farklı çözüm bölgelerinin keşfedilmesini ve verimli bölgelerin daha yoğun şekilde araştırılmasını sağlar. Ateş Böceği Algoritması, ateş böceklerinin parlaklık ve çekim prensiplerini taklit ederken, Yarasa Algoritması ise yarasaların ekokonumlandırma yöntemlerini simüle eder. Sürü zekâsı temelli bu algoritmalar, genellikle uygulama kolaylığı, az sayıda kontrol parametresi ve küresel optimizasyon yetenekleri ile öne çıkar. Özellikle robot yörüngesi planlaması, enerjisi sistemleri optimizasyonu ve sensör ağlarının konumlandırılması gibi mühendislik uygulamalarında başarılı sonuçlar vermektedir.
+
+\subsubsection{Fiziksel süreçlerden esinlenen}
+
+Fiziksel süreçlerden esinlenen algoritmalar, doğadaki fiziksel olayları ve kanunları temel alarak geliştirilen optimizasyon yöntemleridir. Bu algoritmalar, termodinamik, mekanik, elektromanyetik ve kuantum fiziği gibi farklı fizik alanlarındaki prensipleri optimizasyon problemlerine uygular. Benzetilmiş Tavlama (Simulated Annealing), metallerin tavlama işleminden esinlenerek geliştirilmiş en eski fizik temelli algoritmalardan biridir. Bu algoritma, metalin yüksek sıcaklıkta ısıtılıp yavaşça soğutulması sırasında moleküler yapının düşük enerjili duruma geçişini taklit eder. Başlangıçta yüksek bir "sıcaklık" parametresi ile kötü çözümleri de kabul eden algoritma, zamanla "soğuyarak" daha seçici hale gelir ve global optimuma yakınsama şansını artırır.
+
+Yerçekimi Arama Algoritması (Gravitational Search Algorithm), Newton'un evrensel çekim yasasını temel alır ve çözüm adayları arasındaki kütlesel etkileşimi simüle eder. Harmonik Arama (Harmony Search) algoritması, müzisyenlerin doğaçlama sırasında uyumlu tınılar oluşturma sürecinden esinlenir. Büyük Patlama-Büyük Çöküş (Big Bang-Big Crunch) algoritması, evrenin genişleme ve daralma döngülerini taklit ederken, Su Döngüsü Algoritması (Water Cycle Algorithm) ise suyun buharlaşma, yağış ve akış süreçlerini optimizasyon sürecine uyarlar. Bu fizik temelli algoritmalar, genellikle matematiksel olarak iyi tanımlanmış prensiplere dayanmaları nedeniyle, kararlı ve güvenilir sonuçlar verme eğilimindedir. Özellikle mühendislik tasarımı, sinyal işleme ve yapısal optimizasyon gibi alanlarda, karmaşık ve çok değişkenli problemlerin çözümünde yaygın olarak kullanılmaktadır.
+
+\subsubsection{Kimyasal, biyolojik veya sosyal süreçlerden esinlenen}
+
+Kimyasal, biyolojik veya sosyal süreçlerden esinlenen metasezgisel algoritmalar, doğadaki ve toplumdaki çeşitli karmaşık sistemlerin davranışlarını taklit eder. Kimyasal Reaksiyon Optimizasyonu (Chemical Reaction Optimization), moleküllerin kinetik enerjisi, çarpışmaları ve kimyasal reaksiyonları temel alır. Bu algoritma, moleküllerin düşük enerji durumlarına ulaşma eğilimini taklit ederek, optimizasyon problemlerindeki global minimumları bulmayı hedefler. Biyolojik süreçlerden esinlenen algoritmalar arasında, bakterilerin besin arama stratejilerini simüle eden Bakteri Foraging Optimizasyonu ve bağışıklık sisteminin antijen-antikor tepkilerini taklit eden Yapay Bağışıklık Sistemi algoritmaları sayılabilir.
+
+Sosyal süreçlerden esinlenen algoritmalar, insan topluluklarının davranışlarını ve sosyal etkileşimlerini model alır. Öğretme-Öğrenme Tabanlı Optimizasyon (Teaching-Learning-Based Optimization), bir sınıftaki öğretmen-öğrenci etkileşimini simüle ederken, İmperialist Yarışmalı Algoritma (Imperialist Competitive Algorithm), emperyalist ülkelerin kolonileri üzerindeki hakimiyet mücadelesini taklit eder. Sosyal Grup Optimizasyonu, insan gruplarının problem çözme yöntemlerini modellerken, Yapay Dil Topluluğu (Artificial Bee Colony) algoritması ise arı kolonilerinin nektar toplama stratejilerini optimizasyon sürecine uyarlar. Bu algoritmaların ortak özelliği, karmaşık sistemlerdeki emergent (ortaya çıkan) davranışları kullanarak, çok boyutlu ve çok modlu arama uzaylarında etkili çözümler üretmeleridir. Özellikle veri madenciliği, sinir ağları eğitimi, robotik ve yapay zeka uygulamalarında başarılı sonuçlar elde etmektedirler.
+
+\subsection{Keşif ve Sömürü Dengesi Açısından Metasezgisel Algoritmaların Sınıflandırılması}
+
+Metasezgisel algoritmaların başarısında, keşif (exploration) ve sömürü (exploitation) arasındaki dengenin doğru kurulması kritik öneme sahiptir. Keşif, arama uzayının henüz ziyaret edilmemiş bölgelerinin araştırılmasını ifade ederken; sömürü, önceden keşfedilmiş ve umut vadeden bölgelerin daha detaylı incelenmesini kapsar. Bu iki süreç arasındaki denge, algoritmanın performansını doğrudan etkiler. Keşif ağırlıklı algoritmalar, geniş arama uzayını daha kapsamlı tarayabilir ve global optimuma ulaşma olasılığını artırır, ancak yakınsama hızları genellikle düşüktür. Sömürü ağırlıklı algoritmalar ise belirli bölgelerde hızlı yakınsama sağlar, ancak lokal optimumlara takılma riski taşır.
+
+Metasezgisel algoritmaların çoğu, optimizasyon süreci boyunca keşif ve sömürü arasındaki dengeyi dinamik olarak ayarlar. Örneğin, Genetik Algoritmalarda mutasyon operatörü keşif yeteneğini artırırken, çaprazlama operatörü sömürü sürecini destekler. Parçacık Sürü Optimizasyonunda, atalet ağırlığı (inertia weight) ve hızlanma katsayıları (acceleration coefficients) bu dengeyi kontrol eder. Benzetilmiş Tavlama algoritmasında, sıcaklık parametresinin zamanla azalması, algoritmanın başlangıçta keşif ağırlıklı davranıştan sömürü ağırlıklı davranışa geçişini sağlar. Algoritmalar, problem karakteristiklerine ve optimizasyon sürecinin aşamasına göre bu iki süreci dengeleyecek şekilde tasarlanmalıdır. Yapısal optimizasyon gibi mühendislik uygulamalarında, özellikle karmaşık ve çok modlu problemlerde, keşif ve sömürü arasındaki dengenin doğru kurulması, global optimuma ulaşmada ve hesaplama verimliliğinde belirleyici rol oynar.
+
+\subsection{Algoritmaların Hiperparametre Ayarlamaları}
+Metasezgisel algoritmaların performansını doğrudan etkileyen ve kullanıcı tarafından belirlenen değişkenlere hiperparametreler denir. Bu parametreler, algoritmanın davranışını, yakınsama hızını ve çözüm kalitesini önemli ölçüde etkiler. Örneğin, Genetik Algoritmalarda popülasyon büyüklüğü, mutasyon oranı ve çaprazlama oranı; PSO'da atalet ağırlığı ve öğrenme faktörleri; Benzetilmiş Tavlamada başlangıç sıcaklığı ve soğutma oranı gibi değerler hiperparametrelerdir. Bu parametrelerin optimal değerlerinin belirlenmesi, algoritmanın başarısı için kritik öneme sahiptir ve genellikle problem özelliklerine göre farklılık gösterir.
+
+\subsubsection{Parametre Seçim Stratejileri}
+\begin{itemize}
+    \item Deneysel analiz
+    \item Adaptif ayarlama
+    \item Meta-optimizasyon
+    \item İstatistiksel tasarım
+\end{itemize}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}
+\draw[->] (0,0) -- (4,0) node[right] {Parametre};
+\draw[->] (0,0) -- (0,4) node[above] {Performans};
+\draw[scale=1,domain=0:4,smooth,variable=\x,blue] 
+    plot ({\x},{2*exp(-0.5*(\x-2)^2)});
+\end{tikzpicture}
+\caption{Parametre değeri ve performans ilişkisi}
+\label{fig:parameter_performance}
+\end{marginfigure}
+
+\subsection{Optimizasyon Algoritmalarının Objektif Kıyaslanması}
+Metasezgisel optimizasyon algoritmalarının performanslarının objektif olarak karşılaştırılması, algoritma seçimi ve geliştirilmesi açısından büyük önem taşır. Bu karşılaştırma, standart test fonksiyonları, gerçek dünya problemleri ve istatistiksel analiz yöntemleri kullanılarak yapılır. Standart test fonksiyonları (Benchmark functions), farklı zorluk seviyelerinde ve karakteristiklerde (çok modlu, süreksiz, gürültülü vb.) problemler sunarak, algoritmaların çeşitli koşullar altındaki performanslarını değerlendirmeye olanak tanır. Sphere, Rastrigin, Rosenbrock ve Ackley gibi yaygın kullanılan test fonksiyonları, algoritmaların global optimizasyon yeteneklerini, yakınsama hızlarını ve keşif-sömürü dengelerini test etmek için kullanılır.
+
+Algoritmaların objektif kıyaslanmasında, tek bir test problemi veya performans metriği yerine, çeşitli problem türlerini ve çoklu performans kriterlerini içeren kapsamlı bir değerlendirme yaklaşımı benimsenmelidir. Bu amaçla, çözüm kalitesi, yakınsama hızı, hesaplama maliyeti, sağlamlık (robustness) ve ölçeklenebilirlik gibi farklı performans metrikleri bir arada değerlendirilir. İstatistiksel anlamlılık testleri (t-testi, Wilcoxon işaretli sıra testi vb.), algoritmaların performans farklılıklarının rastgele değişkenlikten mi yoksa gerçek bir üstünlükten mi kaynaklandığını belirlemek için kullanılır. Ayrıca, algoritmaların farklı problem boyutlarındaki ve kısıt koşullarındaki davranışları da karşılaştırmanın önemli bir parçasıdır.
+
+No Free Lunch teoremi, hiçbir optimizasyon algoritmasının tüm problem sınıflarında diğerlerinden üstün olamayacağını belirtir. Bu nedenle, algoritmaların kıyaslanması, belirli problem türleri veya uygulama alanları için hangi algoritmanın daha uygun olduğunu belirlemeye odaklanmalıdır. Yapısal optimizasyon, mekanik tasarım ve malzeme bilimi gibi mühendislik alanlarında, problem karakteristiklerine uygun algoritma seçimi, çözüm kalitesi ve hesaplama verimliliği açısından kritik öneme sahiptir. Objektif kıyaslama çalışmaları, yeni geliştirilen algoritmaların mevcut yöntemlere göre avantajlarını ve dezavantajlarını ortaya koyarak, algoritma geliştirme sürecine rehberlik eder ve uygulama alanına özgü en uygun algoritmanın seçilmesini sağlar.
+
+
+\subsubsection{Kıyaslama Kriterleri}
+\begin{itemize}
+    \item Yakınsama hızı
+    \item Çözüm kalitesi
+    \item Hesaplama maliyeti
+    \item Parametre hassasiyeti
+\end{itemize}
+

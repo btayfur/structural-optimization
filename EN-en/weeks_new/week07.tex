@@ -1,0 +1,164 @@
+\section{Optimization of Discrete Parameters}
+Solution methods for optimization problems containing discrete variables will be examined in this section. Particularly, discrete parameter optimization problems encountered in structural systems and solution strategies will be discussed.
+
+\subsection{Differences Between Discrete and Continuous Optimization}
+Classification of optimization problems according to their solution space structure and examination of fundamental differences.
+
+\subsubsection{Fundamental Differences}
+\begin{itemize}
+    \item Structure of solution space
+    \item Usable methods
+    \item Computational complexity
+    \item Use of gradient information
+\end{itemize}
+
+\begin{tcolorbox}[title=Discrete vs Continuous Optimization]
+\begin{itemize}
+    \item \textbf{Discrete:}
+        \begin{itemize}
+            \item Discontinuous solution space
+            \item Combinatorial methods
+            \item NP-hard problems
+            \item Gradient cannot be used
+        \end{itemize}
+    \item \textbf{Continuous:}
+        \begin{itemize}
+            \item Continuous solution space
+            \item Gradient-based methods
+            \item Differentiability
+            \item Use of local information
+        \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Traveling Salesman Problem (TSP)}
+The Traveling Salesman Problem (TSP)\sidenote{
+    
+\qrcode[height=1in]{https://github.com/btayfur/structural-optimization/blob/main/Code/Examples/Exmp4}}, a classic example of discrete optimization problems, is used in modeling many real-world problems. This problem deals with the scenario where a salesman needs to visit certain cities in the shortest distance. Each city must be visited only once, and the tour must end at the starting point. TSP is applied in areas such as logistics, production planning, PCB circuit design, and DNA sequencing. Since the solution space of the problem grows factorially as the number of cities increases (n! possible tours for n cities), finding exact solutions for large-scale problems is computationally quite challenging.
+
+\subsubsection{Problem Definition}
+\begin{itemize}
+    \item Finding shortest tour between N cities
+    \item Visiting each city once
+    \item Returning to starting point
+    \item NP-hard problem class
+\end{itemize}
+
+\begin{equation}
+\min \sum_{i=1}^n \sum_{j=1}^n d_{ij}x_{ij}
+\end{equation}
+
+\subsubsection{Solution Approaches}
+\begin{itemize}
+    \item Exact methods:
+        \begin{itemize}
+            \item Branch and bound
+            \item Integer programming
+        \end{itemize}
+    \item Heuristic methods:
+        \begin{itemize}
+            \item Nearest neighbor
+            \item 2-opt, 3-opt
+            \item Lin-Kernighan
+        \end{itemize}
+    \item Metaheuristic methods:
+        \begin{itemize}
+            \item ACO
+            \item GA
+            \item Tabu search
+        \end{itemize}
+\end{itemize}
+
+\sidenote{TSP is the prototype example of discrete optimization problems. Many real-world problems can be reduced to TSP. However, not every optimization algorithm applied to TSP can be used for another problem. Therefore, although each optimization problem may resemble some common problems, it should be handled considering its own special structure.}
+
+\subsection{Cross-Section Optimization of Steel Structures}
+The most common example of discrete optimization problems encountered in structural optimization is the cross-section optimization of steel structures. In this problem, an optimization problem based on the selection of standard cross-sections used in steel structures is considered.
+
+\subsubsection{Problem Definition}
+Cross-section optimization in steel structures is a discrete optimization problem:
+\begin{itemize}
+    \item Standard cross-section tables
+    \item Structural constraints
+    \item Minimum weight objective
+    \item Grouping requirements
+\end{itemize}
+
+\begin{equation}
+\begin{aligned}
+\min & \quad \sum_{i=1}^n \rho_i L_i A_i \\
+\text{s.t.} & \quad \sigma_i \leq \sigma_{allow} \\
+& \quad \delta \leq \delta_{allow} \\
+& \quad A_i \in S
+\end{aligned}
+\end{equation}
+
+\subsubsection{Solution Strategies}
+\begin{itemize}
+    \item Discrete variable optimization
+    \item Metaheuristic methods
+    \item Hybrid approaches
+    \item Parallel computing
+\end{itemize}
+
+\begin{tcolorbox}[title=Optimization Process]
+\begin{enumerate}
+    \item Structural analysis
+    \item Cross-section selection
+    \item Constraint check
+    \item Iterative improvement
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Simplifying Problem Solution with Indices}
+Steel structure optimization can be handled in different ways. However, if predefined steel sections are used, cross-section selection emerges as a discrete optimization problem. In this case, it is necessary to create a data structure for cross-section selection and solve the optimization problem using this data structure. At this point, section lists can be handled by indexing. However, one point that needs to be discussed is: which parameter will be used as the basis for ordering and indexing the section lists. For example, considering only the cross-sectional area as the basis for ordering does not guarantee the same ordering in terms of bending strength. However, considering bending strength as the basis also cannot guarantee the same ordering under axial load effects. Therefore, it may be more logical to handle section lists with different indexing strategies specific to the problem. For example, cross-sectional area can be used as the basis for elements under axial force, while bending strength can be used as the basis for elements under bending effects. Or we can develop a different, more effective strategy.
+
+\subsubsection{Indexing Strategy}
+\begin{itemize}
+    \item Section groups
+    \item Element numbering
+    \item Node points
+    \item Loading conditions
+\end{itemize}
+
+\begin{equation}
+x_i = \text{ind}(A_i), \quad i = 1,\ldots,n
+\end{equation}
+
+\sidenote{Indexing facilitates the solution of discrete optimization problems and increases computational efficiency.}
+
+\subsubsection{Data Structures}
+\begin{itemize}
+    \item Section properties table
+    \item Connection matrix
+    \item Constraint matrix
+    \item Index conversion table
+\end{itemize}
+
+\begin{tcolorbox}[title=Data Structure Example]
+\begin{verbatim}
+sections = {
+    1: {'A': 10.3, 'I': 171},
+    2: {'A': 13.2, 'I': 375},
+    ...
+}
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Evaluation of Optimization Results}
+Analysis of solution quality and performance of discrete optimization problems.
+
+\subsubsection{Performance Metrics}
+\begin{itemize}
+    \item Total weight
+    \item Maximum stress ratio
+    \item Maximum displacement
+    \item Computation time
+\end{itemize}
+
+\subsubsection{Visualization of Results}
+\begin{itemize}
+    \item Convergence graphs
+    \item Stress distributions
+    \item Displacement shapes
+    \item Cross-section distributions
+\end{itemize} 

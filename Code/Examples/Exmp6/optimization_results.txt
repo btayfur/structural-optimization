@@ -1,0 +1,15 @@
+Optimization Results:
+Best Weight: 938.97 kg
+
+Optimized Radii (cm):
+Segment 1: Outer Radius = 20.37, Inner Radius = 14.36
+Segment 2: Outer Radius = 20.05, Inner Radius = 15.81
+Segment 3: Outer Radius = 15.82, Inner Radius = 9.04
+Segment 4: Outer Radius = 16.00, Inner Radius = 13.33
+Segment 5: Outer Radius = 14.26, Inner Radius = 13.30
+
+Final Displacement: 0.12 cm
+
+Constraint Values for Optimal Solution:
+Displacement constraint margin: 1.88e-02 m
+Stress constraint margin: 0.00 MPa

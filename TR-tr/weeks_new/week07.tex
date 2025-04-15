@@ -1,0 +1,168 @@
+\section{Ayrık Parametrelerin Optimizasyonu}
+Ayrık (Discrete) değişkenler içeren optimizasyon problemlerinin çözüm yöntemleri bu bölümde incelenecektir. Özellikle yapısal sistemlerde karşılaşılan ayrık parametre optimizasyonu problemleri ve çözüm stratejileri ele alınacaktır.
+
+\subsection{Ayrık ve Sürekli Optimizasyon Farkları}
+Optimizasyon problemlerinin çözüm uzayı yapısına göre sınıflandırılması ve temel farklılıkların incelenmesi.
+
+\subsubsection{Temel Farklılıklar}
+\begin{itemize}
+    \item Çözüm uzayının yapısı
+    \item Kullanılabilecek yöntemler
+    \item Hesaplama karmaşıklığı
+    \item Gradyan bilgisinin kullanımı
+\end{itemize}
+
+\begin{tcolorbox}[title=Ayrık vs Sürekli Optimizasyon]
+\begin{itemize}
+    \item \textbf{Ayrık:}
+        \begin{itemize}
+            \item Kesikli çözüm uzayı
+            \item Kombinatoryal yöntemler
+            \item NP-zor problemler
+            \item Gradyan kullanılamaz
+        \end{itemize}
+    \item \textbf{Sürekli:}
+        \begin{itemize}
+            \item Sürekli çözüm uzayı
+            \item Gradyan tabanlı yöntemler
+            \item Diferansiyellenebilirlik
+            \item Lokal bilgi kullanımı
+        \end{itemize}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Gezgin Satıcı Problemi (TSP)}
+Ayrık optimizasyon problemlerinin klasik örneği olan TSP (Travelling Salesman Problem)\sidenote{
+    
+\qrcode[height=1in]{https://github.com/btayfur/structural-optimization/blob/main/Code/Examples/Exmp4}}, birçok gerçek dünya probleminin modellenmesinde kullanılır. Bu problem, bir satıcının belirli şehirleri en kısa mesafede dolaşması gerektiği senaryoyu ele alır. Her şehre yalnızca bir kez uğranması ve tur sonunda başlangıç noktasına dönülmesi gerekir. TSP, lojistik, üretim planlaması, PCB devre tasarımı ve DNA dizilimi gibi alanlarda uygulanır. Problemin çözüm uzayı, şehir sayısı arttıkça faktöriyel olarak büyüdüğünden (n şehir için n! olası tur), büyük ölçekli problemler için kesin çözüm bulmak hesaplama açısından oldukça zorludur.
+
+\subsubsection{Problem Tanımı}
+\begin{itemize}
+    \item N şehir arasında en kısa turu bulma
+    \item Her şehre bir kez uğrama
+    \item Başlangıç noktasına dönme
+    \item NP-zor problem sınıfı
+\end{itemize}
+
+\begin{equation}
+\min \sum_{i=1}^n \sum_{j=1}^n d_{ij}x_{ij}
+\end{equation}
+
+
+\subsubsection{Çözüm Yaklaşımları}
+\begin{itemize}
+    \item Kesin yöntemler:
+        \begin{itemize}
+            \item Dal-sınır
+            \item Tamsayılı programlama
+        \end{itemize}
+    \item Sezgisel yöntemler:
+        \begin{itemize}
+            \item En yakın komşu
+            \item 2-opt, 3-opt
+            \item Lin-Kernighan
+        \end{itemize}
+    \item Metasezgisel yöntemler:
+        \begin{itemize}
+            \item ACO
+            \item GA
+            \item Tabu arama
+        \end{itemize}
+\end{itemize}
+
+\sidenote{TSP, ayrık optimizasyon problemlerinin prototip örneğidir. Birçok gerçek dünya problemi TSP'ye indirgenebilir. Ancak TSP için uygulanan her optimizasyon algoritması, bir başka problem için kullanılamayabilir. Dolayısıyla her optimizasyon problemi bazı yaygın problemlere benzese de, kendi özel yapısı gözönüne alınarak ele alınmalıdır.}
+
+\subsection{Çelik Yapıların Kesit Optimizasyonu}
+Ayrık optimizasyon problemlerinin, yapısal optimizasyonda en kolay karşılaşılacak örneği çelik yapıların kesit optimizasyonudur. Bu problemde, çelik yapılarda kullanılan standart kesitlerin seçimine dayalı bir optimizasyon problemi ele alınır.
+
+\subsubsection{Problem Tanımı}
+Çelik yapılarda kesit optimizasyonu, ayrık bir optimizasyon problemidir:
+\begin{itemize}
+    \item Standart kesit tabloları
+    \item Yapısal kısıtlar
+    \item Minimum ağırlık hedefi
+    \item Gruplandırma gereksinimleri
+\end{itemize}
+
+\begin{equation}
+\begin{aligned}
+\min & \quad \sum_{i=1}^n \rho_i L_i A_i \\
+\text{s.t.} & \quad \sigma_i \leq \sigma_{allow} \\
+& \quad \delta \leq \delta_{allow} \\
+& \quad A_i \in S
+\end{aligned}
+\end{equation}
+
+
+\subsubsection{Çözüm Stratejileri}
+\begin{itemize}
+    \item Ayrık değişkenli optimizasyon
+    \item Metasezgisel yöntemler
+    \item Hibrit yaklaşımlar
+    \item Paralel hesaplama
+\end{itemize}
+
+\begin{tcolorbox}[title=Optimizasyon Süreci]
+\begin{enumerate}
+    \item Yapısal analiz
+    \item Kesit seçimi
+    \item Kısıt kontrolü
+    \item İteratif iyileştirme
+\end{enumerate}
+\end{tcolorbox}
+
+
+
+\subsection{İndislerle Problem Çözümünün Basitleştirilmesi}
+Çelik yapı optimizasyonu farklı biçimlerde ele alınabilir. Ancak eğer öntanımlı çelik kesitleri kullanıyorsa, kesit seçimi ayrık bir optimizasyon problemi olarak karşımıza çıkar. Bu durumda, kesit seçimi için bir veri yapısı oluşturmak ve bu veri yapısını kullanarak optimizasyon problemini çözmek gerekir. Bu noktada kesit listeleri indislenerek ele alınabilir. Ancak üzerine tartışılması gereken bir nokta şu olabilir: kesit listeleri hangi parametresi esas alınarak sıralanacak ve indislenecektir. Örneğin, yalnızca kesit alanının sıralamaya esas kabul edilmesi, eğilme mukavemeti açısından aynı sıralamanın oluşmasını garanti etmez. Fakat eğilme mukavemetinin esas alınması da aynı şekilde eksenel yük etkisi altında aynı sıralamanın oluşacağını garanti edemez. Dolayısıyla, problem özelinde kesit listelerinin farklı indisleme stratejisiyle ele alınması daha mantıklı olabilir. Örneğin, eksenel kuvvete maruz kalan elemanlarda kesit alanı esas alınırken, eğilme etkisin altındaki elemanlarda eğilme mukavemeti esas alınabilir. Veya daha etkili olacak farklı bir strateji geliştirebiliriz. 
+
+\subsubsection{İndisleme Stratejisi}
+\begin{itemize}
+    \item Kesit grupları
+    \item Eleman numaralandırma
+    \item Düğüm noktaları
+    \item Yükleme durumları
+\end{itemize}
+
+\begin{equation}
+x_i = \text{ind}(A_i), \quad i = 1,\ldots,n
+\end{equation}
+
+\sidenote{İndisleme, ayrık optimizasyon problemlerinin çözümünü kolaylaştırır ve hesaplama verimliliğini artırır.}
+
+\subsubsection{Veri Yapıları}
+\begin{itemize}
+    \item Kesit özellikleri tablosu
+    \item Bağlantı matrisi
+    \item Kısıt matrisi
+    \item İndis dönüşüm tablosu
+\end{itemize}
+
+\begin{tcolorbox}[title=Veri Yapısı Örneği]
+\begin{verbatim}
+sections = {
+    1: {'A': 10.3, 'I': 171},
+    2: {'A': 13.2, 'I': 375},
+    ...
+}
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Optimizasyon Sonuçlarının Değerlendirilmesi}
+Ayrık optimizasyon problemlerinin çözüm kalitesinin ve performansının analizi.
+
+\subsubsection{Performans Ölçütleri}
+\begin{itemize}
+    \item Toplam ağırlık
+    \item Maksimum gerilme oranı
+    \item Maksimum deplasman
+    \item Hesaplama süresi
+\end{itemize}
+
+\subsubsection{Sonuçların Görselleştirilmesi}
+\begin{itemize}
+    \item Yakınsama grafikleri
+    \item Gerilme dağılımları
+    \item Deplasman şekilleri
+    \item Kesit dağılımları
+\end{itemize}

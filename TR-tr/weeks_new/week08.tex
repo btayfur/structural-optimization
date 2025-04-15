@@ -1,0 +1,126 @@
+\section{Sürekli Parametrelerin Optimizasyonu}
+Sürekli parametrelerin optimizasyonuyla, yapısal mühendislikte ve diğer mühendislik alanlarında yaygın olarak karşılaşılır. Bu bölümde, sürekli değişkenlerle ifade edilen optimizasyon problemlerinin temel özellikleri, matematiksel formülasyonu ve çözüm yöntemleri incelenecektir.
+
+\subsection{Sürekli Optimizasyonun Temel Kavramları}
+Sürekli optimizasyon, tasarım değişkenlerinin sürekli değerler alabildiği optimizasyon problemlerini ifade eder. Bu tür problemlerde, tasarım uzayı sonsuz sayıda noktadan oluşur ve değişkenler herhangi bir reel değer alabilir.
+
+\subsubsection{Sürekli Tasarım Değişkenleri}
+Sürekli tasarım değişkenleri, belirli bir aralıkta herhangi bir değer alabilen parametrelerdir. Örneğin:
+\begin{itemize}
+    \item Bir kirişin kesit boyutları (genişlik, yükseklik)
+    \item Malzeme özellikleri (elastisite modülü, yoğunluk)
+    \item Geometrik parametreler (açılar, uzunluklar)
+    \item Kontrol parametreleri (kuvvet büyüklükleri, sönümleme katsayıları)
+\end{itemize}
+
+\subsubsection{Sürekli Optimizasyon Problemlerinin Genel Formu}
+Sürekli optimizasyon problemleri genellikle aşağıdaki formda ifade edilir:
+\begin{align}
+\min_{\mathbf{x}} \quad & f(\mathbf{x}) \\
+\text{s.t.} \quad & g_i(\mathbf{x}) \leq 0, \quad i = 1, 2, \ldots, m \\
+& h_j(\mathbf{x}) = 0, \quad j = 1, 2, \ldots, p \\
+& \mathbf{x}_L \leq \mathbf{x} \leq \mathbf{x}_U
+\end{align}
+
+Burada:
+\begin{itemize}
+    \item $\mathbf{x} \in \mathbb{R}^n$ : Tasarım değişkenleri vektörü
+    \item $f(\mathbf{x})$ : Amaç fonksiyonu
+    \item $g_i(\mathbf{x})$ : Eşitsizlik kısıtları
+    \item $h_j(\mathbf{x})$ : Eşitlik kısıtları
+    \item $\mathbf{x}_L, \mathbf{x}_U$ : Alt ve üst sınırlar
+\end{itemize}
+
+\begin{tcolorbox}[title=Sürekli Optimizasyon Örneği]
+Bir konsol kirişin ağırlık minimizasyonu problemi:
+\begin{align}
+\min_{b,h} \quad & \rho \cdot L \cdot b \cdot h \\
+\text{s.t.} \quad & \sigma_{max} = \frac{6PL}{bh^2} \leq \sigma_{allow} \\
+& \delta_{max} = \frac{PL^3}{3EI} \leq \delta_{allow} \\
+& b_{min} \leq b \leq b_{max} \\
+& h_{min} \leq h \leq h_{max}
+\end{align}
+
+Burada $b$ ve $h$ sırasıyla kirişin genişliği ve yüksekliğidir.
+\end{tcolorbox}
+
+\sidenote{Sürekli optimizasyon problemlerinde, amaç fonksiyonu ve kısıtlar genellikle sürekli ve türevlenebilir fonksiyonlardır, bu da gradyan tabanlı optimizasyon yöntemlerinin kullanılmasına olanak sağlar.}
+
+
+\subsection{Sürekli Optimizasyon Problemlerinin Matematiksel Formülasyonu}
+
+Sürekli optimizasyon problemlerinin matematiksel formülasyonu, problemin doğasını ve çözüm yöntemlerini belirleyen temel bir adımdır. Bu formülasyon, amaç fonksiyonu, kısıtlar ve tasarım değişkenlerinin matematiksel olarak ifade edilmesini içerir.
+
+\subsubsection{Amaç Fonksiyonu}
+Amaç fonksiyonu, optimize edilmek istenen mühendislik performans ölçütünü matematiksel olarak ifade eder. Yapısal optimizasyon problemlerinde yaygın olarak kullanılan amaç fonksiyonları şunlardır:
+
+\begin{itemize}
+    \item \textbf{Ağırlık minimizasyonu:} $f(\mathbf{x}) = \sum_{i=1}^{n} \rho_i V_i(\mathbf{x})$
+    \item \textbf{Esneklik minimizasyonu:} $f(\mathbf{x}) = \mathbf{F}^T \mathbf{u}(\mathbf{x})$
+    \item \textbf{Gerilme minimizasyonu:} $f(\mathbf{x}) = \max_{i} \sigma_i(\mathbf{x})$
+    \item \textbf{Deplasman minimizasyonu:} $f(\mathbf{x}) = \max_{i} |u_i(\mathbf{x})|$
+    \item \textbf{Frekans maksimizasyonu:} $f(\mathbf{x}) = -\omega_1(\mathbf{x})$ (ilk doğal frekans)
+    \item \textbf{Maliyet minimizasyonu:} $f(\mathbf{x}) = \sum_{i=1}^{n} c_i x_i$
+\end{itemize}
+
+\subsubsection{Kısıt Fonksiyonları}
+Kısıt fonksiyonları, tasarımın belirli gereksinimleri karşılamasını sağlayan matematiksel ifadelerdir. Yapısal optimizasyon problemlerinde sıklıkla kullanılan kısıtlar şunlardır:
+
+\begin{itemize}
+    \item \textbf{Gerilme kısıtları:} $g_i(\mathbf{x}) = \sigma_i(\mathbf{x}) - \sigma_{allow} \leq 0$
+    \item \textbf{Deplasman kısıtları:} $g_i(\mathbf{x}) = |u_i(\mathbf{x})| - u_{allow} \leq 0$
+    \item \textbf{Burkulma kısıtları:} $g_i(\mathbf{x}) = P_{cr,i}(\mathbf{x}) - P_{applied} \leq 0$
+    \item \textbf{Frekans kısıtları:} $g_i(\mathbf{x}) = \omega_{min} - \omega_i(\mathbf{x}) \leq 0$
+    \item \textbf{Denge kısıtları:} Yapının statik denge koşullarını sağlaması gerektiğini ifade eder.
+    \item \textbf{Geometrik kısıtlar:} Tasarım değişkenlerinin belirli geometrik ilişkileri sağlaması gerektiğini ifade eder.
+\end{itemize}
+
+\subsubsection{Duyarlılık Analizi}
+Duyarlılık analizi, amaç fonksiyonu ve kısıtların tasarım değişkenlerine göre türevlerinin hesaplanmasını içerir. Bu türevler, gradyan tabanlı optimizasyon algoritmalarında arama yönünü belirlemek için kullanılır.
+
+\begin{equation}
+\nabla f(\mathbf{x}) = \left[ \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots, \frac{\partial f}{\partial x_n} \right]^T
+\end{equation}
+
+\begin{equation}
+\nabla g_i(\mathbf{x}) = \left[ \frac{\partial g_i}{\partial x_1}, \frac{\partial g_i}{\partial x_2}, \ldots, \frac{\partial g_i}{\partial x_n} \right]^T
+\end{equation}
+
+Duyarlılık analizi için kullanılan yöntemler:
+\begin{itemize}
+    \item \textbf{Analitik yöntemler:} Türevlerin doğrudan matematiksel ifadelerle hesaplanması
+    \item \textbf{Sonlu farklar yöntemi:} Nümerik yaklaşımla türevlerin hesaplanması
+    \item \textbf{Adjoint yöntem:} Karmaşık sistemlerde verimli duyarlılık hesaplaması için kullanılır
+    \item \textbf{Otomatik türev alma:} Bilgisayar programlarının otomatik olarak türev hesaplaması
+\end{itemize}
+
+\subsubsection{Sürekli Optimizasyonun Ayırt Edici Özellikleri}
+Sürekli optimizasyon problemleri, ayrık optimizasyon problemlerinden farklı olarak, tasarım değişkenlerinin sürekli değerler alabildiği problemlerdir. Bu tür problemlerin ayırt edici özellikleri şunlardır:
+
+\begin{itemize}
+    \item \textbf{Sürekli tasarım uzayı:} Tasarım değişkenleri reel sayılar kümesinden değerler alabilir, bu da sonsuz sayıda olası çözüm anlamına gelir.
+    
+    \item \textbf{Türevlenebilirlik:} Amaç fonksiyonu ve kısıtlar genellikle türevlenebilir fonksiyonlardır, bu da gradyan tabanlı optimizasyon yöntemlerinin kullanılabilmesini sağlar.
+    
+    \item \textbf{Konvekslik:} Problem formülasyonunun konveks olup olmaması, global optimuma ulaşılabilirliği belirler. Konveks problemlerde, lokal optimum aynı zamanda global optimumdur.
+    
+    \item \textbf{Süreklilik:} Fonksiyonların sürekli olması, optimizasyon algoritmasının daha kararlı çalışmasını sağlar.
+    
+    \item \textbf{Diferansiyellenebilirlik:} Yüksek dereceden türevlerin varlığı, Newton benzeri yöntemlerin kullanılabilmesine olanak tanır.
+\end{itemize}
+
+Sürekli optimizasyon problemleri, yapısal mühendislikte kesit boyutları, malzeme özellikleri veya geometrik parametreler gibi değişkenlerin optimize edilmesinde yaygın olarak kullanılır. Bu problemlerin çözümünde, gradyan tabanlı yöntemler (Newton yöntemi, eşlenik gradyan yöntemi), gradyan gerektirmeyen yöntemler (Nelder-Mead simpleks yöntemi) veya meta-sezgisel algoritmalar (genetik algoritma, parçacık sürü optimizasyonu) kullanılabilir.
+
+\subsection{Sürekli Optimizasyonun Yapısal Optimizasyondaki Genel Uygulamaları}
+Bu noktada yaygın iki optimizasyon problemi örneklendirilmiş olsa da, parametrelere bağlı olarak hesaplanan birçok çıktı optimizasyon problemi olarak ele alınabilir ve iyileştirilebilir.
+
+\subsubsection{Öntanımlı Olmayan Boyut Optimizasyonu}
+Öntanımlı olmayan boyut optimizasyonu, yapısal elemanların kesit boyutlarının standart katalog değerleriyle sınırlı olmadan, sürekli değişkenler olarak ele alınmasını içerir. Bu yaklaşım, tasarımcılara daha geniş bir tasarım uzayı sunar ve potansiyel olarak daha verimli yapılar elde edilmesini sağlar. Geleneksel yaklaşımlarda, yapı elemanları için belirli standart kesitler (örneğin, I-profiller, kutu profiller) arasından seçim yapılırken, öntanımlı olmayan optimizasyonda kesit özellikleri (alan, atalet momenti, vb.) doğrudan tasarım değişkenleri olarak kullanılır.
+
+Bu tür optimizasyon problemlerinde, genellikle minimum ağırlık veya maksimum rijitlik gibi amaçlar gözetilirken, gerilme, deplasman ve burkulma gibi yapısal kısıtlar dikkate alınır. Optimizasyon sonucunda elde edilen kesit özellikleri, daha sonra üretilebilir kesitlere dönüştürülmek üzere yorumlanır veya özel kesitler olarak üretilir. Öntanımlı olmayan boyut optimizasyonu, özellikle havacılık, uzay ve otomotiv endüstrilerinde, malzeme kullanımını minimize ederken performansı maksimize etmek için yaygın olarak kullanılmaktadır.
+
+
+\subsubsection{Topolojik Optimizasyon}
+Topolojik optimizasyon, bir yapının en verimli malzeme dağılımını belirlemek için kullanılan ileri bir yapısal optimizasyon yöntemidir. Bu yöntem, belirli bir tasarım alanı içinde malzemenin nerede bulunması ve nerede bulunmaması gerektiğine karar vererek, yapının temel formunu ve bağlantı yapısını optimize eder. Geleneksel optimizasyon yöntemlerinden farklı olarak, sadece boyutları veya şekli değil, yapının topolojisini de değiştirebilir.
+
+Topolojik optimizasyon süreci genellikle bir tasarım alanının sonlu elemanlara bölünmesiyle başlar ve her elemana malzeme yoğunluğunu temsil eden bir tasarım değişkeni atanır. Optimizasyon algoritması, belirli kısıtlar altında (örneğin maksimum ağırlık veya minimum esneklik) bu değişkenleri ayarlayarak en iyi malzeme dağılımını arar. Sonuç olarak, genellikle doğada bulunan yapılara benzeyen, yüksek verimli ve hafif yapılar ortaya çıkar. Bu yöntem, otomotiv ve havacılık endüstrilerinde hafif parçalar tasarlamak, medikal implantlar geliştirmek ve 3D baskı teknolojileri için optimize edilmiş yapılar oluşturmak gibi çeşitli alanlarda yaygın olarak kullanılmaktadır.

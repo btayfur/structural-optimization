@@ -1,0 +1,124 @@
+\section{Optimization of Continuous Parameters}
+Optimization of continuous parameters is commonly encountered in structural engineering and other engineering fields. In this section, the fundamental characteristics, mathematical formulation, and solution methods of optimization problems expressed with continuous variables will be examined.
+
+\subsection{Basic Concepts of Continuous Optimization}
+Continuous optimization refers to optimization problems where design variables can take continuous values. In such problems, the design space consists of an infinite number of points, and variables can take any real value.
+
+\subsubsection{Continuous Design Variables}
+Continuous design variables are parameters that can take any value within a specific range. For example:
+\begin{itemize}
+    \item Cross-sectional dimensions of a beam (width, height)
+    \item Material properties (elasticity modulus, density)
+    \item Geometric parameters (angles, lengths)
+    \item Control parameters (force magnitudes, damping coefficients)
+\end{itemize}
+
+\subsubsection{General Form of Continuous Optimization Problems}
+Continuous optimization problems are generally expressed in the following form:
+\begin{align}
+\min_{\mathbf{x}} \quad & f(\mathbf{x}) \\
+\text{s.t.} \quad & g_i(\mathbf{x}) \leq 0, \quad i = 1, 2, \ldots, m \\
+& h_j(\mathbf{x}) = 0, \quad j = 1, 2, \ldots, p \\
+& \mathbf{x}_L \leq \mathbf{x} \leq \mathbf{x}_U
+\end{align}
+
+Where:
+\begin{itemize}
+    \item $\mathbf{x} \in \mathbb{R}^n$ : Vector of design variables
+    \item $f(\mathbf{x})$ : Objective function
+    \item $g_i(\mathbf{x})$ : Inequality constraints
+    \item $h_j(\mathbf{x})$ : Equality constraints
+    \item $\mathbf{x}_L, \mathbf{x}_U$ : Lower and upper bounds
+\end{itemize}
+
+\begin{tcolorbox}[title=Continuous Optimization Example]
+Weight minimization problem of a cantilever beam:
+\begin{align}
+\min_{b,h} \quad & \rho \cdot L \cdot b \cdot h \\
+\text{s.t.} \quad & \sigma_{max} = \frac{6PL}{bh^2} \leq \sigma_{allow} \\
+& \delta_{max} = \frac{PL^3}{3EI} \leq \delta_{allow} \\
+& b_{min} \leq b \leq b_{max} \\
+& h_{min} \leq h \leq h_{max}
+\end{align}
+
+Where $b$ and $h$ are the width and height of the beam, respectively.
+\end{tcolorbox}
+
+\sidenote{In continuous optimization problems, the objective function and constraints are generally continuous and differentiable functions, which allows the use of gradient-based optimization methods.}
+
+\subsection{Mathematical Formulation of Continuous Optimization Problems}
+
+The mathematical formulation of continuous optimization problems is a fundamental step that determines the nature of the problem and solution methods. This formulation includes the mathematical expression of the objective function, constraints, and design variables.
+
+\subsubsection{Objective Function}
+The objective function mathematically expresses the engineering performance criterion to be optimized. Commonly used objective functions in structural optimization problems are:
+
+\begin{itemize}
+    \item \textbf{Weight minimization:} $f(\mathbf{x}) = \sum_{i=1}^{n} \rho_i V_i(\mathbf{x})$
+    \item \textbf{Flexibility minimization:} $f(\mathbf{x}) = \mathbf{F}^T \mathbf{u}(\mathbf{x})$
+    \item \textbf{Stress minimization:} $f(\mathbf{x}) = \max_{i} \sigma_i(\mathbf{x})$
+    \item \textbf{Displacement minimization:} $f(\mathbf{x}) = \max_{i} |u_i(\mathbf{x})|$
+    \item \textbf{Frequency maximization:} $f(\mathbf{x}) = -\omega_1(\mathbf{x})$ (first natural frequency)
+    \item \textbf{Cost minimization:} $f(\mathbf{x}) = \sum_{i=1}^{n} c_i x_i$
+\end{itemize}
+
+\subsubsection{Constraint Functions}
+Constraint functions are mathematical expressions that ensure the design meets certain requirements. Constraints frequently used in structural optimization problems are:
+
+\begin{itemize}
+    \item \textbf{Stress constraints:} $g_i(\mathbf{x}) = \sigma_i(\mathbf{x}) - \sigma_{allow} \leq 0$
+    \item \textbf{Displacement constraints:} $g_i(\mathbf{x}) = |u_i(\mathbf{x})| - u_{allow} \leq 0$
+    \item \textbf{Buckling constraints:} $g_i(\mathbf{x}) = P_{cr,i}(\mathbf{x}) - P_{applied} \leq 0$
+    \item \textbf{Frequency constraints:} $g_i(\mathbf{x}) = \omega_{min} - \omega_i(\mathbf{x}) \leq 0$
+    \item \textbf{Equilibrium constraints:} Express that the structure must satisfy static equilibrium conditions.
+    \item \textbf{Geometric constraints:} Express that design variables must satisfy certain geometric relationships.
+\end{itemize}
+
+\subsubsection{Sensitivity Analysis}
+Sensitivity analysis involves calculating the derivatives of the objective function and constraints with respect to design variables. These derivatives are used to determine the search direction in gradient-based optimization algorithms.
+
+\begin{equation}
+\nabla f(\mathbf{x}) = \left[ \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots, \frac{\partial f}{\partial x_n} \right]^T
+\end{equation}
+
+\begin{equation}
+\nabla g_i(\mathbf{x}) = \left[ \frac{\partial g_i}{\partial x_1}, \frac{\partial g_i}{\partial x_2}, \ldots, \frac{\partial g_i}{\partial x_n} \right]^T
+\end{equation}
+
+Methods used for sensitivity analysis:
+\begin{itemize}
+    \item \textbf{Analytical methods:} Direct calculation of derivatives using mathematical expressions
+    \item \textbf{Finite difference method:} Numerical approximation of derivatives
+    \item \textbf{Adjoint method:} Used for efficient sensitivity calculation in complex systems
+    \item \textbf{Automatic differentiation:} Automatic derivative calculation by computer programs
+\end{itemize}
+
+\subsubsection{Distinctive Characteristics of Continuous Optimization}
+Continuous optimization problems, unlike discrete optimization problems, are those where design variables can take continuous values. The distinctive characteristics of these problems are:
+
+\begin{itemize}
+    \item \textbf{Continuous design space:} Design variables can take values from the set of real numbers, meaning an infinite number of possible solutions.
+    
+    \item \textbf{Differentiability:} The objective function and constraints are generally differentiable functions, allowing the use of gradient-based optimization methods.
+    
+    \item \textbf{Convexity:} Whether the problem formulation is convex determines the achievability of the global optimum. In convex problems, the local optimum is also the global optimum.
+    
+    \item \textbf{Continuity:} The continuity of functions ensures more stable operation of the optimization algorithm.
+    
+    \item \textbf{Differentiability:} The existence of higher-order derivatives allows the use of Newton-like methods.
+\end{itemize}
+
+Continuous optimization problems are commonly used in structural engineering for optimizing variables such as cross-sectional dimensions, material properties, or geometric parameters. In solving these problems, gradient-based methods (Newton's method, conjugate gradient method), gradient-free methods (Nelder-Mead simplex method), or metaheuristic algorithms (genetic algorithm, particle swarm optimization) can be used.
+
+\subsection{General Applications of Continuous Optimization in Structural Optimization}
+Although two common optimization problems have been exemplified at this point, many outputs calculated depending on parameters can be considered and improved as optimization problems.
+
+\subsubsection{Non-Predefined Size Optimization}
+Non-predefined size optimization involves considering cross-sectional dimensions of structural elements as continuous variables without being limited by standard catalog values. This approach provides designers with a wider design space and enables the potential to obtain more efficient structures. In traditional approaches, while selection is made from certain standard sections (e.g., I-profiles, box sections) for structural elements, in non-predefined optimization, section properties (area, moment of inertia, etc.) are used directly as design variables.
+
+In such optimization problems, objectives such as minimum weight or maximum stiffness are generally pursued while considering structural constraints such as stress, displacement, and buckling. The section properties obtained as a result of optimization are then interpreted to be converted into manufacturable sections or produced as special sections. Non-predefined size optimization is commonly used in aerospace, space, and automotive industries to minimize material usage while maximizing performance.
+
+\subsubsection{Topological Optimization}
+Topological optimization is an advanced structural optimization method used to determine the most efficient material distribution of a structure. This method optimizes the basic form and connection structure of the structure by deciding where material should and should not be located within a specific design area. Unlike traditional optimization methods, it can change not only the dimensions or shape but also the topology of the structure.
+
+The topological optimization process generally begins with dividing a design area into finite elements and assigning a design variable representing material density to each element. The optimization algorithm adjusts these variables to find the best material distribution under certain constraints (e.g., maximum weight or minimum flexibility). As a result, highly efficient and lightweight structures, often resembling those found in nature, emerge. This method is widely used in various fields such as designing lightweight parts in automotive and aerospace industries, developing medical implants, and creating optimized structures for 3D printing technologies. 

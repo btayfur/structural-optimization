@@ -1,0 +1,177 @@
+\section{Boyut ve Şekil Optimizasyonu}
+Yapısal sistemlerin boyut ve şekil parametrelerinin optimizasyonu, daha genel bir ifadeyle kesit optimizasyonu olarak da adlandırılabilir. Probleme bağlı olarak bunlardan biri veya ikisi aynı anda problemin parametresi haline gelebilir.
+
+\subsection{Boyut Optimizasyonunun Temelleri}
+Boyut optimizasyonu, yapısal sistemlerin kesit özelliklerinin (genişlik, yükseklik, kalınlık, vb.) en uygun değerlerini belirlemek için kullanılan bir optimizasyon yöntemidir. Bu yöntem, yapının topolojisini değiştirmeden, sadece elemanların boyutlarını değiştirerek optimum tasarıma ulaşmayı hedefler.
+
+\subsubsection{Problem Parametreleri}
+Boyut optimizasyonunda kullanılan tasarım değişkenleri genellikle şunları içerir:
+\begin{itemize}
+    \item \textbf{Kesit boyutları:} Kirişlerin genişlik ve yükseklikleri, plakaların kalınlıkları
+    \item \textbf{Kesit alanları:} Çubuk elemanların kesit alanları
+    \item \textbf{Atalet momentleri:} Kirişlerin eğilme ve burulma rijitliklerini belirleyen parametreler
+    \item \textbf{Malzeme özellikleri:} Elastisite modülü, yoğunluk gibi değişkenler
+    \item \textbf{Takviye elemanları:} Güçlendirme elemanlarının boyutları ve konumları
+\end{itemize}
+
+\subsubsection{Problem Çıktıları}
+Boyut optimizasyonu sonucunda elde edilen çıktılar şunlardır:
+\begin{itemize}
+    \item \textbf{Optimum kesit boyutları:} Her yapı elemanı için en uygun boyutlar
+    \item \textbf{Minimum ağırlık/maliyet:} Optimizasyon sonucunda elde edilen yapının toplam ağırlığı veya maliyeti
+    \item \textbf{Yapısal performans göstergeleri:} Gerilmeler, deplasmanlar, doğal frekanslar
+    \item \textbf{Malzeme kullanım verimliliği:} Her elemanın taşıma kapasitesinin ne kadar verimli kullanıldığı
+    \item \textbf{Duyarlılık bilgileri:} Tasarım değişkenlerindeki değişimlerin amaç fonksiyonu üzerindeki etkileri
+\end{itemize}
+
+\subsubsection{Kısıtlayıcılar ve Karar Mekanizması}
+Boyut optimizasyonunda, çeşitli kısıtlayıcılar problemin çözüm uzayını sınırlandırır ve karar mekanizmasını etkiler:
+
+\begin{itemize}
+    \item \textbf{Gerilme kısıtları:} $\sigma_{max} \leq \sigma_{allow}$
+    \begin{itemize}
+        \item Yapıdaki maksimum gerilmelerin izin verilen değerleri aşmaması gerekir
+        \item Elemanların boyutlarını artırma yönünde etki yapar
+    \end{itemize}
+    
+    \item \textbf{Deplasman kısıtları:} $\delta_{max} \leq \delta_{allow}$
+    \begin{itemize}
+        \item Yapıdaki maksimum yer değiştirmelerin belirli sınırlar içinde kalmasını sağlar
+        \item Genellikle yapının rijitliğini artırma yönünde etki eder
+    \end{itemize}
+    
+    \item \textbf{Burkulma kısıtları:} $P_{cr} \geq P_{design}$
+    \begin{itemize}
+        \item Basınç elemanlarının burkulma yüklerinin tasarım yükünden büyük olmasını sağlar
+        \item Narin elemanların boyutlarını artırma yönünde etki yapar
+    \end{itemize}
+    
+    \item \textbf{Frekans kısıtları:} $\omega_i \geq \omega_{min}$ veya $\omega_i \leq \omega_{max}$
+    \begin{itemize}
+        \item Yapının doğal frekanslarının belirli aralıklarda olmasını sağlar
+        \item Dinamik yüklere maruz yapılarda önemlidir
+    \end{itemize}
+    
+    \item \textbf{Üretilebilirlik kısıtları:} $x_{min} \leq x \leq x_{max}$
+    \begin{itemize}
+        \item Tasarım değişkenlerinin pratik üretim sınırları içinde kalmasını sağlar
+        \item Çözüm uzayını gerçekçi değerlerle sınırlar
+    \end{itemize}
+    
+    \item \textbf{Geometrik kısıtlar:} Örneğin $h/b \leq \alpha$
+    \begin{itemize}
+        \item Kesit oranlarının belirli sınırlar içinde kalmasını sağlar
+        \item Yerel burkulma ve stabilite sorunlarını önler
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[title=Boyut Optimizasyonu Süreci]
+\begin{enumerate}
+    \item Başlangıç tasarımının oluşturulması
+    \item Yapısal analiz (FEM) ile performans değerlendirmesi
+    \item Duyarlılık analizi ile tasarım değişkenlerinin etkilerinin belirlenmesi
+    \item Optimizasyon algoritması ile tasarım değişkenlerinin güncellenmesi
+    \item Yakınsama sağlanana kadar 2-4 adımlarının tekrarlanması
+\end{enumerate}
+\end{tcolorbox}
+
+Boyut optimizasyonu, yapısal mühendislikte çelik yapıların kesit optimizasyonu, betonarme yapıların donatı optimizasyonu, köprü ve kule tasarımı gibi birçok uygulamada yaygın olarak kullanılmaktadır. Optimizasyon sonucunda, malzeme kullanımı azaltılırken yapısal performans gereksinimleri karşılanmakta, böylece daha ekonomik ve sürdürülebilir tasarımlar elde edilmektedir.
+
+
+\subsection{Şekil Optimizasyonunun Temelleri}
+Yapı elemanlarının dış sınırlarının ve iç boşluklarının optimizasyonu veya mühendisin konuyu bakış biçimine bağlı olarak farklı şekillerde ele alınabilir.
+
+\begin{itemize}
+    \item \textbf{Sınır Temsili:} Geometrik parametreler
+    \item \textbf{Kontrol Noktaları:} Şekil değişimi kontrolü
+    \item \textbf{Düzgünlük:} Geometrik süreklilik
+\end{itemize}
+
+\sidenote{Şekil optimizasyonu, topolojiyi değiştirmeden yapının geometrisini iyileştirir.}
+
+\subsection{Matematiksel Formülasyon}
+Boyut ve şekil optimizasyonu problemlerinin matematiksel ifadesi:
+
+\begin{equation}
+\begin{aligned}
+& \text{minimize} & & f(\mathbf{x}, \mathbf{s}) \\
+& \text{subject to} & & g_i(\mathbf{x}, \mathbf{s}) \leq 0, & & i = 1,\ldots,m \\
+& & & h_j(\mathbf{x}, \mathbf{s}) = 0, & & j = 1,\ldots,p \\
+& & & \mathbf{x}^L \leq \mathbf{x} \leq \mathbf{x}^U \\
+& & & \mathbf{s}^L \leq \mathbf{s} \leq \mathbf{s}^U
+\end{aligned}
+\end{equation}
+
+Burada:
+\begin{itemize}
+    \item \(\mathbf{x}\): Boyut parametreleri
+    \item \(\mathbf{s}\): Şekil parametreleri
+    \item \(f\): Amaç fonksiyonu
+    \item \(g_i, h_j\): Kısıt fonksiyonları
+\end{itemize}
+
+\subsection{Parametrik Modelleme}
+Tasarım değişkenlerinin matematiksel temsili:
+
+\begin{itemize}
+    \item \textbf{CAD Parametreleri:} Geometrik boyutlar
+    \item \textbf{Spline Eğrileri:} Sınır temsili
+    \item \textbf{Morph Box:} Şekil deformasyonu
+\end{itemize}
+
+
+\subsection{Duyarlılık Analizi}
+Bazı yapısal optimizasyon problemlerinde tasarım değişkenleri (parametreler) için duyarlılık analizi yapılabilir. Fakat yapısal optimizasyon problemleri genellikle hiperstatik yapıda olduğundan, duyarlılık analizleri beklenen sonuçları veremez ve hatta yanıltıcı olabilir. \sidenote{Hiperstatiklik konusu, optimizasyon açısından önemlidir. Örneğin bir parametre için seçilen kesit, limit dayanıma yakın olmasına rağmen, yapının bir başka parametresindeki kesitin değişimi yük dağılımını tamamen etkileyerek, ilk kesitin gerrilmesini sınır dayanımın çok daha altına düşürebilir veya üzerine çıkarabilir.}
+
+
+\subsection{Kısıt İşleme}
+Tasarım kısıtlarının ele alınması:
+
+\begin{itemize}
+    \item \textbf{Gerilme Kısıtları:} Malzeme dayanımı
+    \item \textbf{Deplasman Kısıtları:} Şekil değiştirme limitleri
+    \item \textbf{Geometrik Kısıtlar:} Üretilebilirlik
+\end{itemize}
+
+\subsection{Çok Amaçlı Optimizasyon}
+Daha sonra çok amaçlı optimizasyon konusundan çok daha ayrıntılı bir şekilde bahsedilecektir.
+
+\begin{tcolorbox}[title=Çok Amaçlı Yaklaşımlar]
+\begin{itemize}
+    \item \textbf{Pareto Optimizasyonu:} Trade-off analizi
+    \item \textbf{Ağırlıklı Toplam:} Tek amaç fonksiyonu
+    \item \textbf{Hedef Programlama:} İdeal nokta yaklaşımı
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Mesh Adaptasyonu}
+Sonlu eleman modellerinde sıklıkla kabusa dönüşebilen mesh oluşturma süreci de zaman zaman optimizasyonun konusu olabilmektedir. Fakat bu konu ayrı bir uzmanlık alanının ve dersin konusudur.
+
+\begin{itemize}
+    \item \textbf{Mesh Kalitesi:} Eleman şekli kontrolü
+    \item \textbf{Adaptif Mesh:} Otomatik ağ iyileştirme
+    \item \textbf{Remeshing:} Yeniden ağ oluşturma
+\end{itemize}
+
+\subsection{Üretilebilirlik ve Pratik Kısıtlar}
+Tasarımın pratik uygulanabilirliği:
+
+\begin{itemize}
+    \item \textbf{Standart Kesitler:} Katalog seçimi
+    \item \textbf{İmalat Yöntemi:} Üretim kısıtları
+    \item \textbf{Maliyet:} Ekonomik faktörler
+\end{itemize}
+
+\sidenote{Üretilebilirlik kısıtları, teorik optimum ile pratik çözüm arasında denge kurmayı gerektirir ve bu da bambaşka bir optimizasyon problemi olarak ele alınabilir.}
+
+\subsection{Optimizasyon Sonuçlarının Değerlendirilmesi}
+Elde edilen sonuçların analizi ve yorumlanması:
+
+\begin{tcolorbox}[title=Değerlendirme Kriterleri]
+\begin{itemize}
+    \item \textbf{Performans İyileştirmesi:} Başlangıç durumuna göre kazanımlar
+    \item \textbf{Kısıt Sağlama:} Tüm tasarım kısıtlarının kontrolü
+    \item \textbf{Üretilebilirlik:} Pratik uygulanabilirlik analizi
+    \item \textbf{Maliyet Analizi:} Ekonomik değerlendirme
+\end{itemize}
+\end{tcolorbox}

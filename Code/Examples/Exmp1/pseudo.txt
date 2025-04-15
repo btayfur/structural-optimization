@@ -1,0 +1,135 @@
+===================== TAVLAMA BENZETİMİ ALGORİTMASI PSEUDO KODU =====================
+
+## ACKLEY OPTİMİZASYON PROBLEMİ İÇİN TAVLAMA BENZETİMİ ALGORİTMASI ##
+(Başlangıç Seviyesi için Açıklamalı Versiyon)
+
+-----------------------------------------------------------------------------
+> GİRİŞ AÇIKLAMASI:
+
+Tavlama Benzetimi (Simulated Annealing), metallerin tavlanması sürecinden 
+esinlenen bir optimizasyon algoritmasıdır. Metaller ısıtıldıktan sonra yavaşça 
+soğutulduğunda atomlar daha düzenli yerleşerek enerjisi düşük durumlara gelir.
+Bu algoritmada da benzer şekilde, sistemi "sıcaklık" adı verilen bir parametre
+ile kontrol ederiz.
+
+Ackley fonksiyonu ise çok boyutlu, çok sayıda yerel minimuma sahip bir test 
+fonksiyonudur. Global minimumu (x,y,z,...) = (0,0,0,...) noktasındadır ve 
+değeri 0'dır.
+-----------------------------------------------------------------------------
+
+
+ALGORITMA: TavlamaBenzetimi(problem_boyutu, parametreler)
+
+  BAŞLANGIÇ:
+    # Algoritma parametrelerini belirle
+    baslangic_sicaklik = 100.0
+    minimum_sicaklik = 0.00000001 (10^-8)
+    sogutma_orani = 0.99
+    her_sicaklik_icin_iterasyon = 100
+    
+    # Problem sınırlarını belirle
+    alt_sinir = -32.768
+    ust_sinir = 32.768
+    
+    # Rastgele bir başlangıç çözümü oluştur
+    mevcut_cozum = RastgeleVektorUret(problem_boyutu, alt_sinir, ust_sinir)
+    
+    # Başlangıç çözümünün enerji değerini hesapla (Ackley fonksiyonu)
+    mevcut_enerji = AckleyFonksiyonu(mevcut_cozum)
+    
+    # En iyi çözümü ve enerjiyi sakla
+    en_iyi_cozum = mevcut_cozum kopyası
+    en_iyi_enerji = mevcut_enerji
+    
+    # Sıcaklık değişkeni
+    sicaklik = baslangic_sicaklik
+    
+    # Enerji değişimi geçmişi (grafik için)
+    enerji_gecmisi = [mevcut_enerji]
+    
+  ANA DÖNGÜ:
+    # Sıcaklık minimum sıcaklığın üzerinde olduğu sürece devam et
+    SÜREÇ (sicaklik > minimum_sicaklik) OLDUĞU SÜRECE:
+      
+      # Her sıcaklık için kabul edilen hareket sayısını hesapla
+      kabul_edilen_hareket = 0
+      
+      # Her sıcaklık için belirli sayıda iterasyon yap
+      İTERASYON (iter = 1'den her_sicaklik_icin_iterasyon'a kadar):
+        
+        # Adım büyüklüğünü sıcaklığa göre ayarla (yüksek sıcaklıkta büyük adımlar)
+        adim_buyuklugu = karekök(sicaklik) * (ust_sinir - alt_sinir) / 10
+        
+        # Yeni çözüm oluştur (mevcut çözüme rastgele değişiklikler ekleyerek)
+        yeni_cozum = mevcut_cozum + RastgeleGaussianGurultu(0, adim_buyuklugu)
+        
+        # Yeni çözümü sınırlar içinde tut
+        yeni_cozum = SinirlarIcindeKis(yeni_cozum, alt_sinir, ust_sinir)
+        
+        # Yeni çözümün enerjisini hesapla
+        yeni_enerji = AckleyFonksiyonu(yeni_cozum)
+        
+        # Enerji farkını hesapla
+        delta_enerji = yeni_enerji - mevcut_enerji
+        
+        # Kabul olasılığını hesapla
+        # (Daha iyi çözümler her zaman kabul edilir, kötü çözümler sıcaklığa bağlı olasılıkla)
+        kabul_olasiligi = e^(-delta_enerji / sicaklik)
+        
+        # Yeni çözümü kabul et veya reddet
+        EĞER (delta_enerji < 0) VEYA (RastgeleSayi(0,1) < kabul_olasiligi) İSE:
+          # Yeni çözümü kabul et
+          mevcut_cozum = yeni_cozum
+          mevcut_enerji = yeni_enerji
+          kabul_edilen_hareket += 1
+          
+          # En iyi çözümü güncelle
+          EĞER (mevcut_enerji < en_iyi_enerji) İSE:
+            en_iyi_cozum = mevcut_cozum kopyası
+            en_iyi_enerji = mevcut_enerji
+        
+        # Enerji geçmişini güncelle
+        enerji_gecmisi.ekle(mevcut_enerji)
+      
+      # Mevcut sıcaklık için kabul oranını hesapla
+      kabul_orani = kabul_edilen_hareket / her_sicaklik_icin_iterasyon
+      
+      # Sıcaklığı düşür (soğutma stratejisi)
+      sicaklik = sicaklik * sogutma_orani
+    
+  SONUÇ:
+    # Algoritma tamamlandı, en iyi çözümü döndür
+    Döndür en_iyi_cozum, en_iyi_enerji, enerji_gecmisi
+
+
+FONKSIYON: AckleyFonksiyonu(x)
+  # Ackley fonksiyonunun hesaplanması
+  # f(x) = -20 * exp(-0.2 * sqrt(1/d * sum(x_i^2))) - exp(1/d * sum(cos(2π*x_i))) + 20 + e
+  
+  birinci_toplam = x vektörünün karelerinin toplamı
+  ikinci_toplam = x vektörünün her elemanının 2π ile çarpılıp kosinüsünün toplamı
+  
+  terim1 = -20 * e^(-0.2 * karekök(birinci_toplam / problem_boyutu))
+  terim2 = -e^(ikinci_toplam / problem_boyutu)
+  
+  Döndür terim1 + terim2 + 20 + e
+
+
+====================================================================================
+> ALGORİTMANIN ANLAŞILMASI İÇİN BİR BENZETME:
+
+Tavlama benzetimi algoritmasını, bir dağlık arazide gözleri kapalı şekilde 
+global minimumu (en düşük noktayı) bulmaya çalışan bir kişi olarak düşünebiliriz:
+
+1. Kişi rastgele bir noktadan başlar (başlangıç çözümü)
+2. Başlangıçta "sıcaklık" yüksektir, yani kişi büyük adımlarla hareket eder
+   ve yukarı yönlü hareketleri bile yüksek olasılıkla kabul eder
+3. Zamanla "sıcaklık" düşer, adımlar küçülür ve yukarı yönlü hareketleri 
+   kabul etme olasılığı azalır
+4. En sonunda kişi küçük adımlarla sadece aşağı yönlü hareketleri kabul ederek
+   bir minimuma yerleşir
+
+Bu süreçte kişi, yerel minimumlara takılmamak için başlangıçta yukarı yönlü
+hareketleri de kabul eder. Böylece global minimuma yakın bir çözüm bulma 
+olasılığı artar.
+==================================================================================== 

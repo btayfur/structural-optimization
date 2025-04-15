@@ -1,0 +1,210 @@
+\section{Introduction to Structural Optimization}
+Although structural optimization has been treated as a different type of optimization, it essentially progresses with similar principles to all optimization problems. However, the definition of the problem, and consequently the selection of effective solution algorithms, depends on engineering judgment. In this section, we will try to explain how the concepts defined under classical optimization topics transform into a context in structural optimization.
+
+\subsection{Structural Optimization Terminology}
+
+\subsubsection{Objective Functions}
+In structural optimization, the objective function mathematically expresses the engineering target to be optimized. The most commonly used objective functions in structural design are:\sidenote{In multi-objective optimization problems, multiple objective functions can be weighted and converted into a single function, or Pareto-optimal solutions can be sought.}
+
+\begin{itemize}
+    \item \textbf{Weight minimization:} Aims to minimize the total weight of the structure. Particularly critical in aerospace structures.
+    \item \textbf{Cost minimization:} Aims to minimize the production, material, and labor costs of the structure.
+    \item \textbf{Stiffness maximization:} Aims to maximize the structure's resistance to deformation under specific loads.
+    \item \textbf{Strength maximization:} Aims to increase the maximum load the structure can carry.
+    \item \textbf{Energy dissipation:} Optimizes the structure's energy dissipation capacity under dynamic loads.
+\end{itemize}
+
+\subsubsection{Constraints}
+In structural optimization, constraints define the conditions that must be met for the design to be feasible. These constraints are the structural engineering counterparts of mathematical constraints in classical optimization problems:
+
+\begin{itemize}
+    \item \textbf{Stress constraints:} Ensures that stresses in the structure do not exceed allowed maximum values. For example: $\sigma_i \leq \sigma_{allow}$
+    
+    \item \textbf{Displacement constraints:} Ensures that displacements in the structure remain within certain limits. For example: $\delta_i \leq \delta_{allow}$
+    
+    \item \textbf{Buckling constraints:} Ensures that the buckling loads of structural elements are greater than the applied loads by a certain safety factor.
+    
+    \item \textbf{Vibration constraints:} Ensures that the natural frequencies of the structure are above or below certain values.
+    
+    \item \textbf{Geometric constraints:} In the context of structural optimization, ensures that design variables remain within physically feasible limits. For example:
+    \begin{itemize}
+        \item Minimum and maximum cross-sectional dimensions
+        \item Minimum wall thicknesses
+        \item Connection requirements between elements\sidenote{For example, it may be desired that the cross-sectional dimensions used in the upper floors of a steel structure be larger than those in the lower floors, which is also quite logical from an application perspective.}
+        \item Assembly and manufacturing constraints
+    \end{itemize}
+    
+    \item \textbf{Equilibrium constraints:} Expresses that the structure must satisfy static equilibrium conditions.
+    
+    \item \textbf{Compatibility constraints:} Specifies that deformations must be continuous and compatible.
+\end{itemize}
+
+\begin{tcolorbox}[title=Example of Structural Optimization Constraints]
+In a bridge design:
+\begin{align}
+\sigma_{max} &\leq 250 \text{ MPa} \quad \text{(Stress constraint)} \\
+\delta_{mid} &\leq L/400 \quad \text{(Displacement constraint)} \\
+f_1 &\geq 2.0 \text{ Hz} \quad \text{(Vibration constraint)} \\
+t_{min} &\geq 8 \text{ mm} \quad \text{(Geometric constraint)}
+\end{align}
+\end{tcolorbox}
+
+\sidenote{The mathematical formulation of constraints is expressed based on the results of finite element analysis and is generally in the form of nonlinear functions.}
+
+\subsubsection{Design Variables}
+In structural optimization, design variables represent the parameters to be optimized. These variables are parameters that can be changed by the optimization algorithm and adjusted to find the best solution. Common design variables used in structural engineering are:
+
+\begin{itemize}
+    \item \textbf{Cross-sectional properties:} 
+    \begin{itemize}
+        \item Profile dimensions (width, height)
+        \item Wall thicknesses
+        \item Cross-sectional area
+        \item Moment of inertia
+    \end{itemize}
+    
+    \item \textbf{Material properties:} 
+    \begin{itemize}
+        \item Elasticity modulus
+        \item Density
+        \item Yield strength
+    \end{itemize}
+    
+    \item \textbf{Geometric parameters:} 
+    \begin{itemize}
+        \item Node point coordinates
+        \item Curvature radii
+        \item Angles
+    \end{itemize}
+    
+    \item \textbf{Topological parameters:} 
+    \begin{itemize}
+        \item Material presence/absence (0-1 variables)
+        \item Material density (continuous variables varying between 0-1)\sidenote{In many computational methods requiring optimization or regression-like coding, a normalization approach is used to handle data in a more standard way. This approach ensures that data has a value range varying between 0-1. The smallest data in the existing data becomes 0, and the largest data becomes 1. All intermediate values take a proportional value within this range.}
+        \item Presence of connection points
+    \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[title=Design Variables Representation]
+In a typical steel frame optimization, design variables can be represented as:
+\begin{align}
+\mathbf{x} = [A_1, A_2, \ldots, A_n, I_{y1}, I_{y2}, \ldots, I_{yn}, I_{z1}, I_{z2}, \ldots, I_{zn}]^T
+\end{align}
+Where $A_i$ represents cross-sectional areas, and $I_{yi}$ and $I_{zi}$ represent moments of inertia.
+\end{tcolorbox}
+
+\subsection{Structural Optimization Categories}
+
+Structural optimization problems can be categorically divided into some basic headings (Shape, size, topology, etc.). However, an engineer can consider any problem with parameters producing conflicting outputs as an optimization problem.
+
+For example, making a structure lighter often means compromising stress capacities. These conflicting outputs are the result of the same parameters.
+
+\subsubsection{Size Optimization}
+Size optimization is the optimization of cross-sectional dimensions of elements while keeping the general geometry of the structure constant. It is the most basic and commonly used structural optimization approach.
+
+\begin{itemize}
+    \item \textbf{Design variables:} Cross-sectional properties such as area, thickness, width-height
+    \item \textbf{Advantages:} 
+    \begin{itemize}
+        \item Relatively simpler mathematical formulation
+        \item Suitable for improving existing designs
+        \item Widespread use in industry
+    \end{itemize}
+    \item \textbf{Application areas:} Steel structures, frame systems, truss systems
+\end{itemize}
+
+\subsubsection{Shape Optimization}
+Shape optimization is performed by changing the shapes of structural elements or positions of node points. The general topology of the structure is preserved while the boundary geometry is changed.
+
+\begin{itemize}
+    \item \textbf{Design variables:} Node point coordinates, curvature parameters, control points
+    \item \textbf{Advantages:} 
+    \begin{itemize}
+        \item More design flexibility compared to size optimization
+        \item Effective in reducing stress concentrations
+    \end{itemize}
+    \item \textbf{Challenges:} 
+    \begin{itemize}
+        \item Geometric changes may require remeshing of the finite element mesh
+        \item Complex mathematical formulation
+    \end{itemize}
+    \item \textbf{Application areas:} Aerospace structures, automotive parts, bridge constructions
+\end{itemize}
+
+\subsubsection{Topology Optimization}
+Topology optimization is performed by changing the basic structure or topology of the structure. The distribution of material within the structure is optimized, and regions where material should or should not be present are generally determined.
+
+\begin{itemize}
+    \item \textbf{Design variables:} Material density, material presence/absence
+    \item \textbf{Advantages:} 
+    \begin{itemize}
+        \item Highest design freedom
+        \item Ability to produce innovative and unpredictable designs
+        \item Significant potential for material savings
+    \end{itemize}
+    \item \textbf{Challenges:} 
+    \begin{itemize}
+        \item Mathematically and computationally complex
+        \item Difficult to apply manufacturability constraints
+        \item Interpretation of results and conversion to feasible designs
+    \end{itemize}
+    \item \textbf{Application areas:} Aerospace, automotive, medical implants, 3D printed structures
+\end{itemize}
+
+\begin{tcolorbox}[title=Example: Cantilever Beam Optimization]
+Optimization of the same cantilever beam problem with three different approaches:
+
+\textbf{Size:} The variation of beam cross-section height along the length is optimized.
+
+\textbf{Shape:} The shape of the beam's upper and lower surfaces is optimized.
+
+\textbf{Topology:} The material distribution in the beam's internal structure is optimized, usually resulting in a truss-like structure.
+\end{tcolorbox}
+
+\subsection{Structural Optimization Formulation}
+
+A structural optimization problem can be mathematically expressed as:
+
+\begin{align}
+\text{Minimize: } & f(\mathbf{x}) \\
+\text{Constraints: } & g_j(\mathbf{x}) \leq 0, \quad j = 1, 2, \ldots, m \\
+& h_k(\mathbf{x}) = 0, \quad k = 1, 2, \ldots, p \\
+& \mathbf{x}_L \leq \mathbf{x} \leq \mathbf{x}_U
+\end{align}
+
+Where:
+\begin{itemize}
+    \item $\mathbf{x}$ : vector of design variables
+    \item $f(\mathbf{x})$ : objective function (for minimization problem)
+    \item $g_j(\mathbf{x})$ : inequality constraints
+    \item $h_k(\mathbf{x})$ : equality constraints
+    \item $\mathbf{x}_L$ and $\mathbf{x}_U$ : lower and upper bounds of design variables
+\end{itemize}
+
+\subsubsection{Connection with Finite Element Analysis}
+In structural optimization problems, the objective function and constraints are generally dependent on finite element analysis (FEA) results. This connection can be expressed as:
+
+\begin{align}
+\mathbf{K}(\mathbf{x}) \mathbf{u} &= \mathbf{F} \\
+f(\mathbf{x}) &= f(\mathbf{x}, \mathbf{u}(\mathbf{x})) \\
+g_j(\mathbf{x}) &= g_j(\mathbf{x}, \mathbf{u}(\mathbf{x})) \\
+h_k(\mathbf{x}) &= h_k(\mathbf{x}, \mathbf{u}(\mathbf{x}))
+\end{align}
+
+Where:
+\begin{itemize}
+    \item $\mathbf{K}(\mathbf{x})$ : stiffness matrix dependent on design variables
+    \item $\mathbf{u}$ : displacement vector
+    \item $\mathbf{F}$ : external force vector
+\end{itemize}
+
+\begin{tcolorbox}[title=Structural Optimization Algorithm Selection]
+Algorithm selection in structural optimization problems depends on the following factors:
+\begin{itemize}
+    \item Problem size (number of design variables)
+    \item Number and complexity of constraints
+    \item Computational cost of function evaluations
+    \item Characteristic of design space (existence of multiple local optima)
+    \item Availability of sensitivity information
+\end{itemize}
+\end{tcolorbox} 

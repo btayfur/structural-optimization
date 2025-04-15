@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage{Stil}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{tcolorbox}
+\usepackage{qrcode}
+
+% Python kod renklendirmesi için
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+ \renewcommand{\abstractname}{Özet}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Yapısal Optimizasyon Teknikleri}
+\author{Bilal TAYFUR}
+
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\maketitle
+
+\begin{abstract}
+Bu ders, yapısal sistemlerin optimizasyonu konusunda kapsamlı bir giriş sunmaktadır. Öğrenciler, optimizasyon teorisinin temellerinden başlayarak, klasik ve modern optimizasyon yöntemlerinin genel farkını öğrenecek, yapısal sistemlerin tasarımında ve analizinde bu yöntemleri uygulama becerisi kazanacaklardır. 
+
+Anlatılan konuların sağ tarafında verilen karekodlar üzerinden derse ait GitHub reposunda ilgili örneğin kodlarına erişilebilir. Bu repo her yıl güncellenmektedir. Dolayısıyla güncel ders notlarına ve yeni eklenen uygulamalara da repo üzerinden erişlebilir ve arzu edilirse katkı sağlanabilir.
+
+\vspace{10pt}
+\begin{center}
+\qrcode[height=4cm]{https://github.com/btayfur/structural-optimization}
+\end{center}
+
+
+
+
+\vspace{10pt}
+\noindent Bu ders kapsamında, aşağıdaki kaynak kitaplar konuları daha derinlemesine incelemek isteyen öğrencilere tavsiye edilmektedir:
+
+\begin{itemize}
+    \item Cottle, R. W., \& Thapa, M. N. (2017). \textbf{Linear and Nonlinear Optimization}. Springer.
+    \item Rao, S. S. (2019). \textbf{Engineering Optimization: Theory and Practice, 5th Edition}. John Wiley \& Sons.
+    \item Arora, J. S. (2016). \textbf{Introduction to Optimum Design, 4th Edition}. Academic Press.
+    \item Yang, X. S. (2021). \textbf{Nature-Inspired Optimization Algorithms, 2nd Edition}. Elsevier.
+    \item Bendsøe, M. P., \& Sigmund, O. (2003). \textbf{Topology Optimization: Theory, Methods, and Applications}. Springer.
+\end{itemize}
+
+\end{abstract}
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+\end{titlepage}
+
+\newgeometry{top=20mm,bottom=25mm,right=80mm,left=20mm}
+
+% Haftalık içeriklerin dahil edilmesi
+\input{weeks_new/week01}  
+\input{weeks_new/week02}  
+\input{weeks_new/week03}  
+\input{weeks_new/week04}  
+\input{weeks_new/week05}  
+\input{weeks_new/week06}  
+\input{weeks_new/week07}  
+\input{weeks_new/week08}  
+\input{weeks_new/week09}  
+\input{weeks_new/week10}  
+\input{weeks_new/week11}  
+\input{weeks_new/week12}  
+\input{weeks_new/week13}  
+\input{weeks_new/week14}  
+
+\end{document} 

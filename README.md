@@ -1,6 +1,6 @@
 # Structural Optimization Techniques (Yapısal Optimizasyon Teknikleri)
 
-This repository contains course materials for "Structural Optimization Techniques" (Yapısal Optimizasyon Teknikleri), an introduction course on optimization methods in structural engineering. AI is used to create course materials, so still some improvements are needed. If you want to help, its open for any suggestion or commits.
+This repository contains course materials for "Structural Optimization Techniques" (Yapısal Optimizasyon Teknikleri), an introduction course on optimization methods in structural engineering. AI is used to create some sections of the course materials, so still some improvements are needed. If you want to contribute, its open for any suggestion or commits.
 
 ## Download
 
